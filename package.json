@@ -1,0 +1,12 @@
+{
+  "name": "hot-cold-redux",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devJS": "app.jsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
