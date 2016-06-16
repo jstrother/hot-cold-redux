@@ -1,9 +1,9 @@
 const actions = require('./actions.js');
 
-var initialRepositoryState = [];
+var initialState = [];
 
 var hotColdReducer = function(state, action) {
-	state = state || initialRepositoryState;
+	state = state || initialState;
 	switch (action.type) {
 		case actions.NEW_GAME:
 			return state.concat({
