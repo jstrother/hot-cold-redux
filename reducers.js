@@ -12,17 +12,8 @@ var hotColdReducer = function(state, action) {
 			break;
 		case actions.NUMBER_GUESS:
 			return state.concat({
-				// don't for forget to compare to randomNumber
-			});
-			break;
-		case actions.GUESS_DISPLAY:
-			return state.concat({
-				
-			});
-			break;
-		case actions.NUMBER_DISPLAY:
-			return state.concat({
-				
+				// don't forget to compare to randomNumber
+				// don't forget to display both total number of guesses and list of all guesses so far
 			});
 			break;
 		case actions.INFO_SCREEN:

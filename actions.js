@@ -6,29 +6,13 @@ const newGame = function() {
 	};
 };
 
-// action for guessing a number - and then comparing it to randomNumber
+// action for guessing a number - and then comparing it to randomNumber and displaying both the number of guesses and a list of all numbers guessed
 const NUMBER_GUESS = 'NUMBER_GUESS';
 const numberGuess = function(guess, random) {
 		return {
 		type: NUMBER_GUESS,
 		guess: guess
 		random: random
-	};
-};
-
-// action for displaying number of guess
-const GUESS_DISPLAY = 'GUESS_DISPLAY';
-const guessDisplay = function() {
-	return {
-		type: GUESS_DISPLAY
-	};
-};
-
-// action for displaying numbers already guessed
-const NUMBER_DISPLAY = 'NUMBER_DISPLAY';
-const numberDisplay = function() {
-	return {
-		type: NUMBER_DISPLAY
 	};
 };
 
