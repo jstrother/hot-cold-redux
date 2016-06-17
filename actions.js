@@ -1,4 +1,4 @@
-// action for new game - also where randomNumber is created
+// action for new game
 const NEW_GAME = 'NEW_GAME';
 const newGame = function() {
 	return {
@@ -6,13 +6,12 @@ const newGame = function() {
 	};
 };
 
-// action for guessing a number - and then comparing it to randomNumber and displaying both the number of guesses and a list of all numbers guessed
+// action for guessing a number
 const NUMBER_GUESS = 'NUMBER_GUESS';
-const numberGuess = function(guess, random) {
+const numberGuess = function(guess) {
 		return {
 		type: NUMBER_GUESS,
 		guess: guess
-		random: random
 	};
 };
 
@@ -26,6 +25,4 @@ const infoScreen = function() {
 
 exports newGame = newGame;
 exports.numberGuess = numberGuess;
-exports.guessDisplay = guessDisplay;
-exports.numberDisplay = numberDisplay;
 exports.infoScreen = infoScreen;
