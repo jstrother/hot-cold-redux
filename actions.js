@@ -15,14 +15,5 @@ const numberGuess = function(guess) {
 	};
 };
 
-// action for "What?" info screen
-const INFO_SCREEN = 'INFO_SCREEN';
-const infoScreen = function() {
-	return {
-		type: INFO_SCREEN
-	};
-};
-
 exports newGame = newGame;
 exports.numberGuess = numberGuess;
-exports.infoScreen = infoScreen;

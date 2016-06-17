@@ -10,22 +10,33 @@ var hotColdReducer = function(state, action) {
 			(function(min, max) {
 				randomNumber = Math.floor(Math.random() * (max - min +1)) + min;
 			})(1, 100);
-			return state.concat({
-
+			return Object.assign({}, state, {
+				newGame: true,
+				randomNumber: randomNumber,
+				guess: '',
+				prevGuess: [],
+				feedbackMsg: ''
 			});
 			break;
 		case actions.NUMBER_GUESS:
 			var guess = action.guess;
-			var guessCount = 0;
-			var prevGuess = [];
 			compareNumbers(guess, randomNumber);
-			return state.concat({
-
-			});
-			break;
-		case actions.INFO_SCREEN:
-			return state.concat({
-				
+			(function() {
+	      if (guessCount != 0) {
+	          if (randomNumber > userGuess) {
+	              feedbackMsg.append('<br />Higher');
+	          } else if (randomNumber < userGuess) {
+	              feedbackMsg.append('<br />Lower');
+	          }
+	      }            
+	  })();
+			return Object.assign({}, state, {
+				newGame: false,
+				guess: action.guess,
+				prevGuess: [
+					...state.prevGuess,
+					state.guess
+				]
 			});
 			break;
 	};
@@ -37,27 +48,26 @@ function difference(num1, num2) {
   return Math.abs((num1 - num2));
 }
 function compareNumbers(compare1, compare2) {
-  guessCount++;
-  prevGuess.push(' ' + userGuess);
-  $('#feedback p').text('');
+	var feedbackMsg = '';
   if (difference(compare1, compare2) == 0) {
-    $('#feedback p').text('You got it in ' + guessCount + ' guesses! Great guess!');
+    feedbackMsg = (`You got it in ${prevGuess.length} guesses! Great guess!`);
+    // if matching, feedbackMsg = above
   } else {
       if (difference(compare1, compare2) >= 60) {
-          $('#feedback p').text('Freezing');
+          feedbackMsg = ('Freezing');
       } else if (difference(compare1, compare2) >= 45) {
-          $('#feedback p').text('Cold.');
+          feedbackMsg = ('Cold.');
       } else if (difference(compare1, compare2) >= 35) {
-          $('#feedback p').text('So-so.');
+          feedbackMsg = ('So-so.');
       } else if (difference(compare1,compare2) >= 15 ) {
-          $('#feedback p').text('Warmer!');
+          feedbackMsg = ('Warmer!');
       }else if (difference(compare1, compare2) >= 5) {
-          $('#feedback p').text('HOT HOT HOT!!!');
+          feedbackMsg = ('HOT HOT HOT!!!');
       } else {
-          $('#feedback p').text('Almost standing on it!');
+          feedbackMsg = ('Almost standing on it!');
       }
   }
-  $('#guessCount').text(guessCount);
+  return feedbackMsg;
 }
 
 exports.hotColdReducer = hotColdReducer;
