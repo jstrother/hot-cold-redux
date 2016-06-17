@@ -5,33 +5,32 @@ const initialState = [];
 var hotColdReducer = function(state, action) {
 	var state = state || initialState;
 	var randomNumber;
-	switch (action.type) {
-		case actions.NEW_GAME:
-			(function(min, max) {
-				randomNumber = Math.floor(Math.random() * (max - min +1)) + min;
-			})(1, 100);
-			return Object.assign({}, state, {
-				newGame: true,
-				randomNumber: randomNumber,
-				guess: '',
-				prevGuess: [],
-				feedbackMsg: ''
-			});
-			break;
-		case actions.NUMBER_GUESS:
-			var guess = action.guess;
-			compareNumbers(guess, randomNumber);
-			return Object.assign({}, state, {
-				newGame: false,
-				guess: action.guess,
-				prevGuess: [
-					...state.prevGuess,
-					state.guess
-				],
-				feedbackMsg: feedbackMsg
-			});
-			break;
-	};
+
+	if (action.type === actions.NEW_GAME) {
+		(function(min, max) {
+			randomNumber = Math.floor(Math.random() * (max - min +1)) + min;
+		})(1, 100);
+		return Object.assign({}, state, {
+			newGame: true,
+			randomNumber: randomNumber,
+			guess: '',
+			prevGuess: [],
+			feedbackMsg: ''
+		});
+	}
+	else if (action.type === actions.NUMBER_GUESS) {
+		var guess = action.guess;
+		compareNumbers(guess, randomNumber);
+		return Object.assign({}, state, {
+			newGame: false,
+			guess: action.guess,
+			prevGuess: [
+				...state.prevGuess,
+				state.guess
+			],
+			feedbackMsg: feedbackMsg
+		});
+	}
 
 	return state;
 };
