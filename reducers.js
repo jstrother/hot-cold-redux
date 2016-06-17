@@ -1,6 +1,6 @@
 const actions = require('./actions.js');
 
-var initialState = [];
+const initialState = [];
 
 var hotColdReducer = function(state, action) {
 	var state = state || initialState;
@@ -21,22 +21,14 @@ var hotColdReducer = function(state, action) {
 		case actions.NUMBER_GUESS:
 			var guess = action.guess;
 			compareNumbers(guess, randomNumber);
-			(function() {
-	      if (guessCount != 0) {
-	          if (randomNumber > userGuess) {
-	              feedbackMsg.append('<br />Higher');
-	          } else if (randomNumber < userGuess) {
-	              feedbackMsg.append('<br />Lower');
-	          }
-	      }            
-	  })();
 			return Object.assign({}, state, {
 				newGame: false,
 				guess: action.guess,
 				prevGuess: [
 					...state.prevGuess,
 					state.guess
-				]
+				],
+				feedbackMsg: feedbackMsg
 			});
 			break;
 	};
@@ -44,30 +36,45 @@ var hotColdReducer = function(state, action) {
 	return state;
 };
 
-function difference(num1, num2) {
-  return Math.abs((num1 - num2));
-}
 function compareNumbers(compare1, compare2) {
 	var feedbackMsg = '';
-  if (difference(compare1, compare2) == 0) {
-    feedbackMsg = (`You got it in ${prevGuess.length} guesses! Great guess!`);
-    // if matching, feedbackMsg = above
-  } else {
-      if (difference(compare1, compare2) >= 60) {
-          feedbackMsg = ('Freezing');
-      } else if (difference(compare1, compare2) >= 45) {
-          feedbackMsg = ('Cold.');
-      } else if (difference(compare1, compare2) >= 35) {
-          feedbackMsg = ('So-so.');
-      } else if (difference(compare1,compare2) >= 15 ) {
-          feedbackMsg = ('Warmer!');
-      }else if (difference(compare1, compare2) >= 5) {
-          feedbackMsg = ('HOT HOT HOT!!!');
-      } else {
-          feedbackMsg = ('Almost standing on it!');
-      }
+	const diff = Math.abs(compare1 - compare2);
+
+  if (diff == 0) {
+    feedbackMsg = `You got it in ${prevGuess.length} guesses! Great guess!`;
   }
+  else {
+	  if (diff >= 60) {
+		  feedbackMsg = `Freezing.`;
+	  }
+	  else if (diff >= 45) {
+	    feedbackMsg = `Cold.`;
+	  }
+	  else if (diff >= 35) {
+	    feedbackMsg = `So-so.`;
+	  }
+	  else if (diff >= 15 ) {
+	    feedbackMsg = `Warmer!`;
+	  }
+	  else if (diff >= 5) {
+	    feedbackMsg = `HOT HOT HOT!!!`;
+	  }
+	  else {
+	    feedbackMsg = `Almost standing on it!`;
+	  }
+  }
+
+  higherLower(compare1, compare2);
+
   return feedbackMsg;
+}
+
+function higherLower(number1, number2) {
+	if (number1 > number2) {
+    feedbackMsg.append(`&nbsp; Lower`);
+	} else if (number1 < number2) {
+    feedbackMsg.append(`&nbsp; Higher`);
+	}
 }
 
 exports.hotColdReducer = hotColdReducer;
