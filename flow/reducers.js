@@ -63,17 +63,16 @@ function compareNumbers(compare1, compare2) {
 	  }
   }
 
-  higherLower(compare1, compare2);
+  if (diff != 0) {
+  	if (compare1 > compare2) {
+	    feedbackMsg.append(`&nbsp; Lower`);
+		}
+		else if (compare1 < compare2) {
+	    feedbackMsg.append(`&nbsp; Higher`);
+		}
+  }
 
   return feedbackMsg;
-}
-
-function higherLower(number1, number2) {
-	if (number1 > number2) {
-    feedbackMsg.append(`&nbsp; Lower`);
-	} else if (number1 < number2) {
-    feedbackMsg.append(`&nbsp; Higher`);
-	}
 }
 
 exports.hotColdReducer = hotColdReducer;

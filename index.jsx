@@ -6,6 +6,7 @@ const store = require('./flow/store.js');
 const Game = require('./components/game.jsx');
 
 document.addEventListener('DOMContentLoaded', function() {
+	console.log('index.jsx loaded');
 	ReactDOM.render(
 		<Provider store={store}>
 			<Game />
