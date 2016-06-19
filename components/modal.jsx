@@ -1,11 +1,16 @@
+// called into header.jsx
+
 const React = require('react');
 
 console.log('modal.jsx loaded');
 
 var Modal = React.createClass({
+	onCloseClick: function() {
+
+	},
 	render: function() {
 		return (
-			<div className="overlay" id="modal ref="modal"">
+			<div className="overlay" id="modal" ref="modal">
 				<div className="content">
 					<h3>What do I do?</h3>
 					<div>
@@ -16,7 +21,7 @@ var Modal = React.createClass({
 							<li>3. You will <strong>get feedback</strong> on how close ("hot") or far ("cold") your guess is.</li>
 						</ul>
 						<p>So, Are you ready?</p>
-						<button className="close" onClick={}>Got It!</button>
+						<button className="close" onClick={this.onCloseClick}>Got It!</button>
 					</div>
 				</div>
 			</div>

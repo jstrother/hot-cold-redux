@@ -1,3 +1,5 @@
+// called into reducers.js
+
 // action for new game
 const NEW_GAME = 'NEW_GAME';
 const newGame = function() {
@@ -15,5 +17,5 @@ const numberGuess = function(guess) {
 	};
 };
 
-exports newGame = newGame;
+exports.newGame = newGame;
 exports.numberGuess = numberGuess;

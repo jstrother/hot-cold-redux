@@ -2,10 +2,11 @@
   "name": "hot-cold-redux",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "js/app.js",
   "devJS": "index.jsx",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack-dev-server",
+    "build": "webpack"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +24,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
+    "react-redux": "^4.4.5",
     "redux": "^3.5.2"
   }
 }

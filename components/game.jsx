@@ -1,3 +1,5 @@
+// called into index.jsx
+
 const React = require('react');
 
 const Header = require('./header.jsx');

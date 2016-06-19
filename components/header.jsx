@@ -1,3 +1,5 @@
+// called into game.jsx
+
 const React = require('react');
 
 const Modal = require('./modal.jsx');

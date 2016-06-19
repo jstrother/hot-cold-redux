@@ -1,3 +1,5 @@
+// called into index.jsx
+
 const redux = require('redux');
 const createStore = redux.createStore;
 

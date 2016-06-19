@@ -1,3 +1,5 @@
+// called into store.js
+
 const actions = require('./actions.js');
 
 const initialState = [];

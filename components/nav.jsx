@@ -1,14 +1,22 @@
+// called into header.jsx
+
 const React = require('react');
 
 console.log('nav.jsx loaded');
 
-var Nav = React.createclass({
+var Nav = React.createClass({
+	onWhatClick: function() {
+
+	},
+	onNewClick: function() {
+
+	},
 	render: function() {
 		return (
 			<nav> 
 				<ul className="clearfix">
-					<li className="what" onClick={}>What ?</li>
-					<li className="new" onClick={}>+ New Game</li>
+					<li className="what" onClick={this.onWhatClick}>What ?</li>
+					<li className="new" onClick={this.onNewClick}>+ New Game</li>
 				</ul>
 			</nav>
 		);
