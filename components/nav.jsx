@@ -1,16 +1,17 @@
 // called into header.jsx
 
 import React from 'react'
+import {connect} from 'react-redux'
 
-console.log('nav.jsx loaded');
+console.log('nav.jsx loaded')
 
-var Nav = React.createClass({
+const Nav = React.createClass({
 	onWhatClick: function() {
-		console.log('onWhatClick');
+		console.log('onWhatClick')
 
 	},
 	onNewClick: function() {
-		console.log('onNewClick');
+		console.log('onNewClick')
 
 	},
 	render: function() {
@@ -23,6 +24,8 @@ var Nav = React.createClass({
 			</nav>
 		);
 	}
-});
+})
 
-module.exports = Nav;
+const NavContainer = connect()(Nav)
+
+module.exports = NavContainer

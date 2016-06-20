@@ -1,12 +1,13 @@
 // called into header.jsx
 
 import React from 'react'
+import {connect} from 'react-redux'
 
-console.log('modal.jsx loaded');
+console.log('modal.jsx loaded')
 
-var Modal = React.createClass({
+const Modal = React.createClass({
 	onCloseClick: function() {
-		console.log('onGuessClick');
+		console.log('onGuessClick')
 	},
 	render: function() {
 		return (
@@ -27,6 +28,8 @@ var Modal = React.createClass({
 			</div>
 		);
 	}
-});
+})
 
-module.exports = Modal;
+const ModalContainer = connect()(Modal)
+
+module.exports = ModalContainer

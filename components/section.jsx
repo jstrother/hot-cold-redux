@@ -1,12 +1,13 @@
 // called into game.jsx
 
 import React from 'react'
+import {connect} from 'react-redux'
 
-console.log('section.jsx loaded');
+console.log('section.jsx loaded')
 
-var Section = React.createClass({
+const Section = React.createClass({
 	onGuessClick: function() {
-		console.log('onGuessClick');
+		console.log('onGuessClick')
 	},
 	render: function() {
 		return (
@@ -25,6 +26,8 @@ var Section = React.createClass({
 			</section>
 		);
 	}
-});
+})
 
-module.exports = Section;
+const SectionContainer = connect()(Section)
+
+module.exports = SectionContainer

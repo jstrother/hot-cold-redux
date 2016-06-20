@@ -10,7 +10,7 @@ var hotColdReducer = function(state, action) {
 
 	if (action.type === actions.NEW_GAME) {
 		(function(min, max) {
-			randomNumber = Math.floor(Math.random() * (max - min +1)) + min;
+			randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
 		})(1, 100);
 		return Object.assign({}, state, {
 			newGame: true,
