@@ -1,12 +1,12 @@
 // called into header.jsx
 
-const React = require('react');
+import React from 'react'
 
 console.log('modal.jsx loaded');
 
 var Modal = React.createClass({
 	onCloseClick: function() {
-
+		console.log('onGuessClick');
 	},
 	render: function() {
 		return (

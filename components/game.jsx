@@ -1,15 +1,15 @@
 // called into index.jsx
 
-const React = require('react');
-
-const Header = require('./header.jsx');
-const Section = require('./section.jsx');
+import React from 'react'
+import {connect} from 'react-redux'
+import Header from './header.jsx'
+import Section from './section.jsx'
 
 console.log('game.jsx loaded');
 
 var Game = React.createClass({
 	newGame: function() {
-
+		
 	},
 	numberGuess: function() {
 
@@ -22,4 +22,12 @@ var Game = React.createClass({
 	}
 });
 
-module.exports = Game;
+const mapStateToProps = function(state, props) {
+	return {
+
+	};
+};
+
+const Container = connect(mapStateToProps)(Game);
+
+module.exports = Container;

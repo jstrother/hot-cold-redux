@@ -1,14 +1,16 @@
 // called into header.jsx
 
-const React = require('react');
+import React from 'react'
 
 console.log('nav.jsx loaded');
 
 var Nav = React.createClass({
 	onWhatClick: function() {
+		console.log('onWhatClick');
 
 	},
 	onNewClick: function() {
+		console.log('onNewClick');
 
 	},
 	render: function() {

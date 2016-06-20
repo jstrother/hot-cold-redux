@@ -1,16 +1,16 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const Provider = require('react-redux').Provider;
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
 
-const store = require('./flow/store.js');
-const Game = require('./components/game.jsx');
+import store from './flow/store.js'
+import Game from './components/game.jsx'
 
 document.addEventListener('DOMContentLoaded', function() {
-	console.log('index.jsx loaded');
+	console.log('index.jsx loaded ::: state:', store.getState());
 	ReactDOM.render(
 		<Provider store={store}>
 			<Game />
 		</Provider>,
 		document.getElementById('app')
 	);
-});
+})

@@ -1,12 +1,12 @@
 // called into game.jsx
 
-const React = require('react');
+import React from 'react'
 
 console.log('section.jsx loaded');
 
 var Section = React.createClass({
 	onGuessClick: function() {
-
+		console.log('onGuessClick');
 	},
 	render: function() {
 		return (

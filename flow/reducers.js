@@ -1,6 +1,6 @@
 // called into store.js
 
-const actions = require('./actions.js');
+import actions from './actions.js'
 
 const initialState = [];
 

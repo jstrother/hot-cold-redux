@@ -1,9 +1,8 @@
 // called into game.jsx
 
-const React = require('react');
-
-const Modal = require('./modal.jsx');
-const Nav = require('./nav.jsx');
+import React from 'react'
+import Modal from './modal.jsx'
+import Nav from './nav.jsx'
 
 console.log('header.jsx loaded');
 
