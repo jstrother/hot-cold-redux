@@ -46,20 +46,38 @@
 
 	'use strict';
 	
-	var React = __webpack_require__(1);
-	var ReactDOM = __webpack_require__(38);
-	var Provider = __webpack_require__(168).Provider;
+	var _react = __webpack_require__(1);
 	
-	var store = __webpack_require__(190);
-	var Game = __webpack_require__(193);
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(38);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _reactRedux = __webpack_require__(168);
+	
+	var _store = __webpack_require__(190);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	var _game = __webpack_require__(193);
+	
+	var _game2 = _interopRequireDefault(_game);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	document.addEventListener('DOMContentLoaded', function () {
-		console.log('index.jsx loaded');
-		ReactDOM.render(React.createElement(
-			Provider,
-			{ store: store },
-			React.createElement(Game, null)
-		));
+		console.log('index.jsx loaded ::: store state:', _store2.default.getState());
+		_reactDom2.default.render(_react2.default.createElement(
+			_reactRedux.Provider,
+			{ store: _store2.default },
+			_react2.default.createElement(_game2.default, {
+				newGame: true,
+				randomNumber: true,
+				guess: true,
+				prevGuess: true,
+				feedbackMsg: true })
+		), document.getElementById('app'));
 	});
 
 /***/ },
@@ -21913,14 +21931,17 @@
 
 	'use strict';
 	
-	// called into index.jsx
+	var _redux = __webpack_require__(175);
 	
-	var redux = __webpack_require__(175);
-	var createStore = redux.createStore;
+	var _redux2 = _interopRequireDefault(_redux);
 	
-	var reducers = __webpack_require__(191);
+	var _reducers = __webpack_require__(191);
 	
-	var store = createStore(reducers.hotColdReducer);
+	var _reducers2 = _interopRequireDefault(_reducers);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var store = (0, _redux.createStore)(_reducers2.default.hotColdReducer); // called into index.jsx
 	
 	module.exports = store;
 
@@ -21930,11 +21951,13 @@
 
 	'use strict';
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	var _actions = __webpack_require__(192);
 	
-	// called into store.js
+	var _actions2 = _interopRequireDefault(_actions);
 	
-	var actions = __webpack_require__(192);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } // called into store.js
 	
 	var initialState = [];
 	
@@ -21942,7 +21965,7 @@
 		var state = state || initialState;
 		var randomNumber;
 	
-		if (action.type === actions.NEW_GAME) {
+		if (action.type === _actions2.default.NEW_GAME) {
 			(function (min, max) {
 				randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
 			})(1, 100);
@@ -21953,7 +21976,7 @@
 				prevGuess: [],
 				feedbackMsg: ''
 			});
-		} else if (action.type === actions.NUMBER_GUESS) {
+		} else if (action.type === _actions2.default.NUMBER_GUESS) {
 			var guess = action.guess;
 			compareNumbers(guess, randomNumber);
 			return Object.assign({}, state, {
@@ -22036,31 +22059,68 @@
 
 	'use strict';
 	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(168);
+	
+	var _header = __webpack_require__(194);
+	
+	var _header2 = _interopRequireDefault(_header);
+	
+	var _section = __webpack_require__(197);
+	
+	var _section2 = _interopRequireDefault(_section);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	// called into index.jsx
 	
-	var React = __webpack_require__(1);
-	
-	var Header = __webpack_require__(194);
-	var Section = __webpack_require__(197);
-	
-	console.log('game.jsx loaded');
-	
-	var Game = React.createClass({
+	var Game = _react2.default.createClass({
 		displayName: 'Game',
 	
-		newGame: function newGame() {},
-		numberGuess: function numberGuess() {},
+		newGame: function newGame() {
+			this.props.dispatch(actions.newGame());
+		},
+		numberGuess: function numberGuess(guess) {
+			this.props.dispatch(actions.numberGuess(guess));
+		},
+		onGuessClick: function onGuessClick() {
+			console.log('onGuessClick');
+		},
+		onCloseClick: function onCloseClick() {
+			console.log('onGuessClick');
+		},
+		onWhatClick: function onWhatClick() {
+			console.log('onWhatClick');
+		},
+		onNewClick: function onNewClick() {
+			console.log('onNewClick');
+		},
 		render: function render() {
-			React.createElement(
+			_react2.default.createElement(
 				'div',
 				{ className: 'game' },
-				React.createElement(Header, null),
-				React.createElement(Section, null)
+				_react2.default.createElement(_header2.default, {
+					onCloseClick: true,
+					onWhatClick: true,
+					onNewClick: true }),
+				_react2.default.createElement(_section2.default, {
+					onGuessClick: true })
 			);
 		}
 	});
 	
-	module.exports = Game;
+	console.log('game.jsx state:', Game.state);
+	
+	var mapStateToProps = function mapStateToProps(state, props) {
+		return {};
+	};
+	
+	var GameContainer = (0, _reactRedux.connect)(mapStateToProps)(Game);
+	
+	module.exports = GameContainer;
 
 /***/ },
 /* 194 */
@@ -22068,36 +22128,63 @@
 
 	'use strict';
 	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(168);
+	
+	var _modal = __webpack_require__(195);
+	
+	var _modal2 = _interopRequireDefault(_modal);
+	
+	var _nav = __webpack_require__(196);
+	
+	var _nav2 = _interopRequireDefault(_nav);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	// called into game.jsx
-	
-	var React = __webpack_require__(1);
-	
-	var Modal = __webpack_require__(195);
-	var Nav = __webpack_require__(196);
 	
 	console.log('header.jsx loaded');
 	
-	var Header = React.createClass({
+	var Header = _react2.default.createClass({
 		displayName: 'Header',
 	
-		newGame: function newGame() {},
-		numberGuess: function numberGuess() {},
+		newGame: function newGame() {
+			this.props.dispatch(actions.newGame());
+		},
+		onCloseClick: function onCloseClick() {
+			console.log('onGuessClick');
+		},
+		onWhatClick: function onWhatClick() {
+			console.log('onWhatClick');
+		},
+		onNewClick: function onNewClick() {
+			console.log('onNewClick');
+		},
 		render: function render() {
-			React.createElement(
+			_react2.default.createElement(
 				Header,
 				{ className: 'header' },
-				React.createElement(
+				_react2.default.createElement(
 					'h1',
 					null,
 					'HOT or COLD'
 				),
-				React.createElement(Nav, null),
-				React.createElement(Modal, null)
+				_react2.default.createElement(_nav2.default, null),
+				_react2.default.createElement(_modal2.default, null)
 			);
 		}
 	});
 	
-	module.exports = Header;
+	var mapStateToProps = function mapStateToProps(state, props) {
+		return {};
+	};
+	
+	var HeaderContainer = (0, _reactRedux.connect)(mapStateToProps)(Header);
+	
+	module.exports = HeaderContainer;
 
 /***/ },
 /* 195 */
@@ -22105,66 +22192,74 @@
 
 	'use strict';
 	
-	// called into header.jsx
+	var _react = __webpack_require__(1);
 	
-	var React = __webpack_require__(1);
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(168);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// called into header.jsx
 	
 	console.log('modal.jsx loaded');
 	
-	var Modal = React.createClass({
+	var Modal = _react2.default.createClass({
 		displayName: 'Modal',
 	
-		onCloseClick: function onCloseClick() {},
+		onCloseClick: function onCloseClick() {
+			console.log('onCloseClick');
+		},
 		render: function render() {
-			return React.createElement(
+			return _react2.default.createElement(
 				'div',
 				{ className: 'overlay', id: 'modal', ref: 'modal' },
-				React.createElement(
+				_react2.default.createElement(
 					'div',
 					{ className: 'content' },
-					React.createElement(
+					_react2.default.createElement(
 						'h3',
 						null,
 						'What do I do?'
 					),
-					React.createElement(
+					_react2.default.createElement(
 						'div',
 						null,
-						React.createElement(
+						_react2.default.createElement(
 							'p',
 							null,
 							'This is a Hot or Cold Number Guessing Game. The game goes like this: '
 						),
-						React.createElement(
+						_react2.default.createElement(
 							'ul',
 							null,
-							React.createElement(
+							_react2.default.createElement(
 								'li',
 								null,
 								'1. I pick a ',
-								React.createElement(
+								_react2.default.createElement(
 									'strong',
 									null,
 									'random secret number'
 								),
 								' between 1 to 100 and keep it hidden.'
 							),
-							React.createElement(
+							_react2.default.createElement(
 								'li',
 								null,
 								'2. You need to ',
-								React.createElement(
+								_react2.default.createElement(
 									'strong',
 									null,
 									'guess'
 								),
 								' until you can find the hidden secret number.'
 							),
-							React.createElement(
+							_react2.default.createElement(
 								'li',
 								null,
 								'3. You will ',
-								React.createElement(
+								_react2.default.createElement(
 									'strong',
 									null,
 									'get feedback'
@@ -22172,12 +22267,12 @@
 								' on how close ("hot") or far ("cold") your guess is.'
 							)
 						),
-						React.createElement(
+						_react2.default.createElement(
 							'p',
 							null,
 							'So, Are you ready?'
 						),
-						React.createElement(
+						_react2.default.createElement(
 							'button',
 							{ className: 'close', onClick: this.onCloseClick },
 							'Got It!'
@@ -22188,7 +22283,9 @@
 		}
 	});
 	
-	module.exports = Modal;
+	var ModalContainer = (0, _reactRedux.connect)()(Modal);
+	
+	module.exports = ModalContainer;
 
 /***/ },
 /* 196 */
@@ -22196,28 +22293,40 @@
 
 	'use strict';
 	
-	// called into header.jsx
+	var _react = __webpack_require__(1);
 	
-	var React = __webpack_require__(1);
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(168);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// called into header.jsx
 	
 	console.log('nav.jsx loaded');
 	
-	var Nav = React.createclass({
-		onWhatClick: function onWhatClick() {},
-		onNewClick: function onNewClick() {},
+	var Nav = _react2.default.createClass({
+		displayName: 'Nav',
+	
+		onWhatClick: function onWhatClick() {
+			console.log('onWhatClick');
+		},
+		onNewClick: function onNewClick() {
+			console.log('onNewClick');
+		},
 		render: function render() {
-			return React.createElement(
+			return _react2.default.createElement(
 				'nav',
 				null,
-				React.createElement(
+				_react2.default.createElement(
 					'ul',
 					{ className: 'clearfix' },
-					React.createElement(
+					_react2.default.createElement(
 						'li',
 						{ className: 'what', onClick: this.onWhatClick },
 						'What ?'
 					),
-					React.createElement(
+					_react2.default.createElement(
 						'li',
 						{ className: 'new', onClick: this.onNewClick },
 						'+ New Game'
@@ -22227,7 +22336,9 @@
 		}
 	});
 	
-	module.exports = Nav;
+	var NavContainer = (0, _reactRedux.connect)()(Nav);
+	
+	module.exports = NavContainer;
 
 /***/ },
 /* 197 */
@@ -22235,47 +22346,60 @@
 
 	'use strict';
 	
-	// called into game.jsx
+	var _react = __webpack_require__(1);
 	
-	var React = __webpack_require__(1);
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(168);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// called into game.jsx
 	
 	console.log('section.jsx loaded');
 	
-	var Section = React.createclass({
-		onGuessClick: function onGuessClick() {},
+	var Section = _react2.default.createClass({
+		displayName: 'Section',
+	
+		numberGuess: function numberGuess(guess) {
+			this.props.dispatch(actions.numberGuess(guess));
+		},
+		onGuessClick: function onGuessClick() {
+			console.log('onGuessClick');
+		},
 		render: function render() {
-			return React.createElement(
+			return _react2.default.createElement(
 				'section',
 				{ className: 'game' },
-				React.createElement(
+				_react2.default.createElement(
 					'h2',
 					null,
 					'Make your Guess!'
 				),
-				React.createElement(
+				_react2.default.createElement(
 					'form',
 					null,
-					React.createElement('input', { type: 'text', name: 'userGuess', id: 'userGuess', ref: 'userGuess', className: 'text', maxlength: '3', autocomplete: 'off', placeholder: 'Enter your Guess', required: true }),
-					React.createElement('button', { type: 'submit', id: 'guessButton', ref: 'guessButton', className: 'button', name: 'submit', value: 'Guess', onClick: this.onGuessClick })
+					_react2.default.createElement('input', { type: 'text', name: 'userGuess', id: 'userGuess', ref: 'userGuess', className: 'text', maxlength: '3', autocomplete: 'off', placeholder: 'Enter your Guess', required: true }),
+					_react2.default.createElement('button', { type: 'submit', id: 'guessButton', ref: 'guessButton', className: 'button', name: 'submit', value: 'Guess', onClick: this.onGuessClick })
 				),
-				React.createElement(
+				_react2.default.createElement(
 					'p',
 					null,
 					'Guess #',
-					React.createElement(
+					_react2.default.createElement(
 						'span',
 						{ id: 'guessCount', ref: 'guessCount' },
 						'0'
 					),
 					'!'
 				),
-				React.createElement(
+				_react2.default.createElement(
 					'ul',
 					{ id: 'guessList', ref: 'guessList', className: 'guessBox clearfix' },
-					React.createElement(
+					_react2.default.createElement(
 						'div',
 						{ id: 'feedback', ref: 'feedback' },
-						React.createElement(
+						_react2.default.createElement(
 							'p',
 							null,
 							'Give it your best!'
@@ -22286,7 +22410,9 @@
 		}
 	});
 	
-	module.exports = Section;
+	var SectionContainer = (0, _reactRedux.connect)()(Section);
+	
+	module.exports = SectionContainer;
 
 /***/ }
 /******/ ]);

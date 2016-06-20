@@ -1,6 +1,6 @@
 // called into store.js
 
-import actions from './actions.js'
+import actions from './actions.js';
 
 const initialState = [];
 

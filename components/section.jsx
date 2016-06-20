@@ -1,9 +1,9 @@
 // called into game.jsx
 
-import React from 'react'
-import {connect} from 'react-redux'
+import React from 'react';
+import { connect } from 'react-redux';
 
-console.log('section.jsx loaded')
+console.log('section.jsx loaded');
 
 const Section = React.createClass({
 	numberGuess: function(guess) {
@@ -13,13 +13,14 @@ const Section = React.createClass({
 	},
 	onGuessClick: function() {
 		console.log('onGuessClick')
+		this.props.onGuessClick(this.props)
 	},
 	render: function() {
 		return (
 			<section className="game">
 				<h2>Make your Guess!</h2>
 				<form>
-					<input type="text" name="userGuess" id="userGuess" ref="userGuess" className="text" maxlength="3" autocomplete="off" placeholder="Enter your Guess" required/>
+					<input type="text" name="userGuess" id="userGuess" ref="userGuess" className="text" maxlength="3" autocomplete="off" placeholder="Enter your Guess" required />
 			  			<button type="submit" id="guessButton" ref="guessButton" className="button" name="submit" value="Guess" onClick={this.onGuessClick} />
 				</form>
 			  		<p>Guess #<span id="guessCount" ref="guessCount">0</span>!</p>
@@ -31,8 +32,8 @@ const Section = React.createClass({
 			</section>
 		);
 	}
-})
+});
 
-const SectionContainer = connect()(Section)
+const SectionContainer = connect()(Section);
 
-module.exports = SectionContainer
+module.exports = SectionContainer;

@@ -1,11 +1,11 @@
 // called into game.jsx
 
-import React from 'react'
-import {connect} from 'react-redux'
-import Modal from './modal.jsx'
-import Nav from './nav.jsx'
+import React from 'react';
+import { connect } from 'react-redux';
+import Modal from './modal.jsx';
+import Nav from './nav.jsx';
 
-console.log('header.jsx loaded')
+console.log('header.jsx loaded');
 
 const Header = React.createClass({
 	newGame: function() {
@@ -35,8 +35,8 @@ const mapStateToProps = function(state, props) {
 	return {
 
 	};
-}
+};
 
-const HeaderContainer = connect(mapStateToProps)(Header)
+const HeaderContainer = connect(mapStateToProps)(Header);
 
-module.exports = HeaderContainer
+module.exports = HeaderContainer;
