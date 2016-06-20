@@ -11,15 +11,31 @@ const Game = React.createClass({
 			actions.newGame()
 		)
 	},
-	numberGuess: function() {
+	numberGuess: function(guess) {
 		this.props.dispatch(
 			actions.numberGuess(guess)
 		)
 	},
+	onGuessClick: function() {
+		console.log('onGuessClick')
+	},
+	onCloseClick: function() {
+		console.log('onGuessClick')
+	},
+	onWhatClick: function() {
+		console.log('onWhatClick')
+	},
+	onNewClick: function() {
+		console.log('onNewClick')
+	},
 	render: function() {
 		<div className="game">
-			<Header />
-			<Section />
+			<Header
+				onCloseClick
+				onWhatClick
+				onNewClick />
+			<Section
+				onGuessClick />
 		</div>
 	}
 })

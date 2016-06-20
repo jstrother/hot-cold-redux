@@ -9,7 +9,12 @@ document.addEventListener('DOMContentLoaded', function() {
 	console.log('index.jsx loaded ::: store state:', store.getState())
 	ReactDOM.render(
 		<Provider store={store}>
-			<Game />
+			<Game 
+				newGame
+				randomNumber
+				guess
+				prevGuess
+				feedbackMsg />
 		</Provider>,
 		document.getElementById('app')
 	)

@@ -6,6 +6,11 @@ import {connect} from 'react-redux'
 console.log('section.jsx loaded')
 
 const Section = React.createClass({
+	numberGuess: function(guess) {
+		this.props.dispatch(
+			actions.numberGuess(guess)
+		)
+	},
 	onGuessClick: function() {
 		console.log('onGuessClick')
 	},

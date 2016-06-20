@@ -13,10 +13,14 @@ const Header = React.createClass({
 			actions.newGame()
 		)
 	},
-	numberGuess: function() {
-		this.props.dispatch(
-			actions.numberGuess(guess)
-		)
+	onCloseClick: function() {
+		console.log('onGuessClick')
+	},
+	onWhatClick: function() {
+		console.log('onWhatClick')
+	},
+	onNewClick: function() {
+		console.log('onNewClick')
 	},
 	render: function() {
 		<Header className="header">

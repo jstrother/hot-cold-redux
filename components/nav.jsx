@@ -8,11 +8,9 @@ console.log('nav.jsx loaded')
 const Nav = React.createClass({
 	onWhatClick: function() {
 		console.log('onWhatClick')
-
 	},
 	onNewClick: function() {
 		console.log('onNewClick')
-
 	},
 	render: function() {
 		return (

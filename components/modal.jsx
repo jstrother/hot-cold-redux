@@ -7,7 +7,7 @@ console.log('modal.jsx loaded')
 
 const Modal = React.createClass({
 	onCloseClick: function() {
-		console.log('onGuessClick')
+		console.log('onCloseClick')
 	},
 	render: function() {
 		return (
