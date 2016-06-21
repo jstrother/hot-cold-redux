@@ -5,9 +5,11 @@ import { connect } from 'react-redux';
 
 console.log('modal.jsx loaded');
 
-const Modal = React.createClass({
+const HeaderModal = React.createClass({
 	onCloseClick: function() {
-		console.log('onCloseClick')
+		this.setState({
+			open: !this.state.open
+		});
 	},
 	render: function() {
 		return (
@@ -30,6 +32,6 @@ const Modal = React.createClass({
 	}
 });
 
-const ModalContainer = connect()(Modal);
+const Container = connect()(HeaderModal);
 
-module.exports = ModalContainer;
+module.exports = Container;

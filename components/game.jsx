@@ -2,52 +2,62 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import Header from './header.jsx';
-import Section from './section.jsx';
+import TopHeader from './header.jsx';
+import MainSection from './section.jsx';
+import { numberGuess } from '../flow/actions.js';
 
 const Game = React.createClass({
 	newGame: function() {
 		this.props.dispatch(
-			actions.newGame()
+			newGame()
 		)
 	},
 	numberGuess: function(guess) {
 		this.props.dispatch(
-			actions.numberGuess(guess)
+			numberGuess(guess)
 		)
 	},
-	onGuessClick: function() {
-		console.log('onGuessClick')
+	onGuessClick: function(userGuess) {
+		console.log('onGuessClick', userGuess);
+		this.numberGuess(userGuess);
 	},
 	onCloseClick: function() {
-		console.log('onGuessClick')
+		console.log('onGuessClick');
 	},
 	onWhatClick: function() {
-		console.log('onWhatClick')
+		console.log('onWhatClick');
 	},
 	onNewClick: function() {
-		console.log('onNewClick')
+		console.log('onNewClick');
+		this.newGame();
 	},
 	render: function() {
-		<div className="game">
-			<Header
-				onCloseClick
-				onWhatClick
-				onNewClick />
-			<Section
-				onGuessClick />
-		</div>
+		return (<div className="game">
+					<TopHeader
+						onCloseClick
+						onWhatClick
+						onNewClick />
+					<MainSection
+						onGuessClick={this.onGuessClick}
+						feedbackMsg={this.props.feedbackMsg}
+						guess={this.props.guess}
+						prevGuess={this.props.prevGuess} />
+				</div>
+		)
 	}
 });
 
 console.log('game.jsx state:', Game.state);
 
 const mapStateToProps = function(state, props) {
+	console.log('state', state);
 	return {
-
+		feedbackMsg: state.feedbackMsg,
+		guess: state.guess,
+		prevGuess: state.prevGuess
 	};
 };
 
-const GameContainer = connect(mapStateToProps)(Game);
+const Container = connect(mapStateToProps)(Game);
 
-module.exports = GameContainer;
+module.exports = Container;

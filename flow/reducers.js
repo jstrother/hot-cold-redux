@@ -2,26 +2,25 @@
 
 import actions from './actions.js';
 
-const initialState = [];
+const initialState = {
+	newGame: true,
+	randomNumber: (function(min, max) {
+			return (Math.floor(Math.random() * (max - min + 1)) + min);
+		})(1, 100),
+	prevGuess: [],
+	guess: '',
+	feedbackMsg: 'Give it your best!'
+};
 
-var hotColdReducer = function(state, action) {
+const hotColdReducer = function(state, action) {
 	var state = state || initialState;
-	var randomNumber;
 
 	if (action.type === actions.NEW_GAME) {
-		(function(min, max) {
-			randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-		})(1, 100);
-		return Object.assign({}, state, {
-			newGame: true,
-			randomNumber: randomNumber,
-			guess: '',
-			prevGuess: [],
-			feedbackMsg: ''
-		});
+		return Object.assign({}, state, initialState);
 	}
 	else if (action.type === actions.NUMBER_GUESS) {
 		var guess = action.guess;
+		console.log(guess);
 		compareNumbers(guess, randomNumber);
 		return Object.assign({}, state, {
 			newGame: false,

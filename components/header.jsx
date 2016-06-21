@@ -2,15 +2,16 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import Modal from './modal.jsx';
-import Nav from './nav.jsx';
+import HeaderNav from './nav.jsx';
+import HeaderModal from './modal.jsx';
+import { newGame } from '../flow/actions.js';
 
 console.log('header.jsx loaded');
 
-const Header = React.createClass({
+const TopHeader = React.createClass({
 	newGame: function() {
 		this.props.dispatch(
-			actions.newGame()
+			newGame()
 		)
 	},
 	onCloseClick: function() {
@@ -20,14 +21,17 @@ const Header = React.createClass({
 		console.log('onWhatClick')
 	},
 	onNewClick: function() {
-		console.log('onNewClick')
+		console.log('onNewClick');
+		this.newGame();
 	},
 	render: function() {
-		<Header className="header">
+		return (
+		<div className="header">
 			<h1>HOT or COLD</h1>
-			<Nav />
-			<Modal />
-		</Header>
+			<HeaderNav />
+			<HeaderModal />
+		</div>
+		)
 	}
 });
 
@@ -37,6 +41,6 @@ const mapStateToProps = function(state, props) {
 	};
 };
 
-const HeaderContainer = connect(mapStateToProps)(Header);
+const Container = connect(mapStateToProps)(TopHeader);
 
-module.exports = HeaderContainer;
+module.exports = Container;
