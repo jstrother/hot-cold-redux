@@ -6,8 +6,6 @@ import HeaderNav from './nav.jsx';
 import HeaderModal from './modal.jsx';
 import { newGame } from '../flow/actions.js';
 
-console.log('header.jsx loaded');
-
 const TopHeader = React.createClass({
 	newGame: function() {
 		this.props.dispatch(

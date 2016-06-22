@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import Modal from './modal.jsx';
 import { newGame } from '../flow/actions.js';
 
-console.log('nav.jsx loaded');
-
 const HeaderNav = React.createClass({
 	onWhatClick: function() {
 		// opens Modal

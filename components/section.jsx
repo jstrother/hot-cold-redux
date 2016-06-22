@@ -3,17 +3,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-console.log('section.jsx loaded');
-
 const MainSection = React.createClass({
 	onGuessClick: function(event) {
-		console.log('onGuessClick');
 		event.preventDefault();
+		this.props.prevGuess.push(this.refs.userGuess.value);
 		this.props.onGuessClick(this.refs.userGuess.value);
 		this.refs.userGuess.value='';
+		console.log("prevGuess", this.props.prevGuess);
+
 	},
 	render: function() {
 		console.log("prevGuess", this.props.prevGuess);
+		console.log("feedbackMsg", this.props.feedbackMsg);
 		return (
 			<section className="game">
 				<h2>Make your Guess!</h2>

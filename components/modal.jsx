@@ -3,8 +3,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-console.log('modal.jsx loaded');
-
 const HeaderModal = React.createClass({
 	onCloseClick: function() {
 		this.setState({

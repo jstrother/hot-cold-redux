@@ -17,9 +17,10 @@ const Game = React.createClass({
 			numberGuess(guess)
 		)
 	},
-	onGuessClick: function(userGuess) {
+	onGuessClick: function(userGuess, feedbackMsg) {
 		console.log('onGuessClick', userGuess);
 		this.numberGuess(userGuess);
+		console.log('feedbackMsg', feedbackMsg);
 	},
 	onCloseClick: function() {
 		console.log('onGuessClick');
@@ -32,18 +33,19 @@ const Game = React.createClass({
 		this.newGame();
 	},
 	render: function() {
-		return (<div className="game">
-					<TopHeader
-						onCloseClick
-						onWhatClick
-						onNewClick />
-					<MainSection
-						onGuessClick={this.onGuessClick}
-						feedbackMsg={this.props.feedbackMsg}
-						guess={this.props.guess}
-						prevGuess={this.props.prevGuess} />
-				</div>
-		)
+		return (
+			<div className="game">
+				<TopHeader
+					onCloseClick
+					onWhatClick
+					onNewClick />
+				<MainSection
+					onGuessClick={this.onGuessClick}
+					feedbackMsg={this.props.feedbackMsg}
+					guess={this.props.guess}
+					prevGuess={this.props.prevGuess} />
+			</div>
+		);
 	}
 });
 
