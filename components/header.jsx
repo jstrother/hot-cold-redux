@@ -46,4 +46,4 @@ const mapStateToProps = function(state, props) {
 
 const Container = connect(mapStateToProps)(TopHeader);
 
-module.exports = Container;
+export default Container;

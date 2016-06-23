@@ -36,4 +36,4 @@ const HeaderNav = React.createClass({
 
 const Container = connect()(HeaderNav);
 
-module.exports = Container;
+export default Container;

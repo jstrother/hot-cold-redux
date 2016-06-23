@@ -32,4 +32,4 @@ const HeaderModal = React.createClass({
 
 const Container = connect()(HeaderModal);
 
-module.exports = Container;
+export default Container;

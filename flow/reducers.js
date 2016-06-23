@@ -12,7 +12,7 @@ const initialState = {
 	feedbackMsg: 'Give it your best!'
 };
 
-const hotColdReducer = function(state, action) {
+const hotColdReducer = (state, action) => {
 	var state = state || initialState;
 
 	if (action.type === actions.NEW_GAME) {

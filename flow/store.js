@@ -6,4 +6,4 @@ import { hotColdReducer } from './reducers.js';
 
 const store = createStore(hotColdReducer);
 
-module.exports = store;
+export default store;

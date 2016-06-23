@@ -18,7 +18,6 @@ const Game = React.createClass({
 		)
 	},
 	onGuessClick: function(userGuess) {
-		console.log('onGuessClick (game.jsx)', userGuess);
 		this.numberGuess(userGuess);
 		// console.log('feedbackMsg (game.jsx)', feedbackMsg);
 	},
@@ -57,4 +56,4 @@ const mapStateToProps = function(state, props) {
 
 const Container = connect(mapStateToProps)(Game);
 
-module.exports = Container;
+export default Container;

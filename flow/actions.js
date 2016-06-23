@@ -1,20 +1,18 @@
 // called into reducers.js
 
 // action for new game
-const NEW_GAME = 'NEW_GAME';
-const newGame = function() {
+const newGame = () => {
 	return {
-		type: NEW_GAME
-	};
+		type: 'NEW_GAME'
+	}
 };
 
 // action for guessing a number
-const NUMBER_GUESS = 'NUMBER_GUESS';
-const numberGuess = function(guess) {
+const numberGuess = (guess) => {
 		return {
-		type: NUMBER_GUESS,
-		guess: guess
-	};
+		type: 'NUMBER_GUESS',
+		guess
+	}
 };
 
 exports.newGame = newGame;
