@@ -19,8 +19,6 @@ const hotColdReducer = function(state, action) {
 		return Object.assign({}, state, initialState);
 	}
 	else if (action.type === actions.NUMBER_GUESS) {
-		var guess = action.guess;
-		console.log(guess);
 		compareNumbers(guess, randomNumber);
 		return Object.assign({}, state, {
 			newGame: false,
@@ -37,7 +35,7 @@ const hotColdReducer = function(state, action) {
 };
 
 function compareNumbers(compare1, compare2) {
-	var feedbackMsg = '';
+	console.log('compare1', compare1, 'compare2', compare2);
 	const diff = Math.abs(compare1 - compare2);
 
   if (diff == 0) {

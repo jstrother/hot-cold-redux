@@ -10,11 +10,14 @@ const MainSection = React.createClass({
 		this.props.onGuessClick(this.refs.userGuess.value);
 		this.refs.userGuess.value='';
 		console.log("prevGuess", this.props.prevGuess);
+		console.log('length', this.props.prevGuess.length);
+		console.log('feedbackMsg', this.props.feedbackMsg);
 
 	},
 	render: function() {
-		console.log("prevGuess", this.props.prevGuess);
-		console.log("feedbackMsg", this.props.feedbackMsg);
+		console.log("prevGuess from render", this.props.prevGuess);
+		console.log('length from render', this.props.prevGuess.length);
+		console.log("feedbackMsg from render", this.props.feedbackMsg);
 		return (
 			<section className="game">
 				<h2>Make your Guess!</h2>

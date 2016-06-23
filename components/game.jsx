@@ -17,10 +17,10 @@ const Game = React.createClass({
 			numberGuess(guess)
 		)
 	},
-	onGuessClick: function(userGuess, feedbackMsg) {
-		console.log('onGuessClick', userGuess);
+	onGuessClick: function(userGuess) {
+		console.log('onGuessClick (game.jsx)', userGuess);
 		this.numberGuess(userGuess);
-		console.log('feedbackMsg', feedbackMsg);
+		// console.log('feedbackMsg (game.jsx)', feedbackMsg);
 	},
 	onCloseClick: function() {
 		console.log('onGuessClick');
@@ -35,10 +35,7 @@ const Game = React.createClass({
 	render: function() {
 		return (
 			<div className="game">
-				<TopHeader
-					onCloseClick
-					onWhatClick
-					onNewClick />
+				<TopHeader />
 				<MainSection
 					onGuessClick={this.onGuessClick}
 					feedbackMsg={this.props.feedbackMsg}
@@ -48,8 +45,6 @@ const Game = React.createClass({
 		);
 	}
 });
-
-console.log('game.jsx state:', Game.state);
 
 const mapStateToProps = function(state, props) {
 	console.log('state', state);

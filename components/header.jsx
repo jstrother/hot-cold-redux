@@ -13,10 +13,12 @@ const TopHeader = React.createClass({
 		)
 	},
 	onCloseClick: function() {
-		console.log('onGuessClick')
+		console.log('onGuessClick');
+
 	},
 	onWhatClick: function() {
-		console.log('onWhatClick')
+		console.log('onWhatClick');
+
 	},
 	onNewClick: function() {
 		console.log('onNewClick');
@@ -26,8 +28,11 @@ const TopHeader = React.createClass({
 		return (
 		<div className="header">
 			<h1>HOT or COLD</h1>
-			<HeaderNav />
-			<HeaderModal />
+			<HeaderNav 
+					onWhatClick={this.props.onWhatClick}
+					onNewClick={this.props.onNewClick} />
+			<HeaderModal
+					onCloseClick={this.props.onCloseClick} />
 		</div>
 		)
 	}
