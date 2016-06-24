@@ -1,9 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Provider = require('react-redux').Provider;
 
-import store from './flow/store.js';
-import Game from './components/game.jsx';
+var store = require('./flow/store.js');
+var Game = require('./components/game.jsx');
 
 document.addEventListener('DOMContentLoaded', function() {
 	ReactDOM.render(

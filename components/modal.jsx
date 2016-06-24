@@ -1,7 +1,7 @@
 // called into nav.jsx
 
-import React from 'react';
-import { connect } from 'react-redux';
+var React = require('react');
+var connect = require('react-redux').connect;
 
 const HeaderModal = React.createClass({
 	onCloseClick: function() {
@@ -32,4 +32,4 @@ const HeaderModal = React.createClass({
 
 const Container = connect()(HeaderModal);
 
-export default Container;
+module.exports = Container;

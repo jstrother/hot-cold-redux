@@ -1,9 +1,9 @@
 // called into index.jsx
 
-import redux from 'redux';
-import { createStore } from 'redux';
-import { hotColdReducer } from './reducers.js';
+var redux = require('redux');
+var createStore = require('redux').createStore;
+var hotColdReducer = require('./reducers.js').hotColdReducer;
 
 const store = createStore(hotColdReducer);
 
-export default store;
+module.exports = store;

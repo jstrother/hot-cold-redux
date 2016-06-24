@@ -1,6 +1,6 @@
 // called into store.js
 
-import actions from './actions.js';
+var actions = require('./actions.js');
 
 const initialState = {
 	newGame: true,
@@ -19,7 +19,7 @@ const hotColdReducer = (state, action) => {
 		return Object.assign({}, state, initialState);
 	}
 	else if (action.type === actions.NUMBER_GUESS) {
-		compareNumbers(guess, randomNumber);
+		let feedbackMsg = compareNumbers(action.guess, state.randomNumber, state.prevGuess.length + 1);
 		return Object.assign({}, state, {
 			newGame: false,
 			guess: action.guess,
@@ -34,12 +34,13 @@ const hotColdReducer = (state, action) => {
 	return state;
 };
 
-function compareNumbers(compare1, compare2) {
+function compareNumbers(compare1, compare2, length) {
+	let feedbackMsg;
 	console.log('compare1', compare1, 'compare2', compare2);
 	const diff = Math.abs(compare1 - compare2);
 
   if (diff == 0) {
-    feedbackMsg = `You got it in ${prevGuess.length} guesses! Great guess!`;
+    feedbackMsg = `You got it in ${length} guesses! Great guess!`;
   }
   else {
 	  if (diff >= 60) {
@@ -64,10 +65,10 @@ function compareNumbers(compare1, compare2) {
 
   if (diff != 0) {
   	if (compare1 > compare2) {
-	    feedbackMsg.append(`&nbsp; Lower`);
+	    feedbackMsg += `<br /> Lower`;
 		}
 		else if (compare1 < compare2) {
-	    feedbackMsg.append(`&nbsp; Higher`);
+	    feedbackMsg += `<br /> Higher`;
 		}
   }
 

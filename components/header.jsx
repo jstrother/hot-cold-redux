@@ -1,28 +1,21 @@
 // called into game.jsx
 
-import React from 'react';
-import { connect } from 'react-redux';
-import HeaderNav from './nav.jsx';
-import HeaderModal from './modal.jsx';
-import { newGame } from '../flow/actions.js';
+var React = require('react');
+var connect = require('react-redux').connect;
+var HeaderNav = require('./nav.jsx');
+var HeaderModal = require('./modal.jsx');
+var newGame = require('../flow/actions.js').newGame;
 
 const TopHeader = React.createClass({
-	newGame: function() {
-		this.props.dispatch(
-			newGame()
-		)
-	},
-	onCloseClick: function() {
-		console.log('onGuessClick');
-
-	},
 	onWhatClick: function() {
 		console.log('onWhatClick');
 
 	},
 	onNewClick: function() {
 		console.log('onNewClick');
-		this.newGame();
+		this.props.dispatch(
+			newGame()
+		)
 	},
 	render: function() {
 		return (
@@ -46,4 +39,4 @@ const mapStateToProps = function(state, props) {
 
 const Container = connect(mapStateToProps)(TopHeader);
 
-export default Container;
+module.exports = Container;

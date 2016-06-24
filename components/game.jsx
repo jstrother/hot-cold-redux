@@ -1,24 +1,21 @@
 // called into index.jsx
 
-import React from 'react';
-import { connect } from 'react-redux';
-import TopHeader from './header.jsx';
-import MainSection from './section.jsx';
-import { numberGuess } from '../flow/actions.js';
+var React = require('react');
+var { connect } = require('react-redux');
+var TopHeader = require('./header.jsx');
+var MainSection = require('./section.jsx');
+var { numberGuess } = require('../flow/actions.js');
 
 const Game = React.createClass({
 	newGame: function() {
 		this.props.dispatch(
-			newGame()
+			this.newGame()
 		)
 	},
 	onGuessClick: function(guess) {
 		this.props.dispatch(
 			numberGuess(guess)
 		)
-	},
-	onCloseClick: function() {
-		console.log('onGuessClick');
 	},
 	onWhatClick: function() {
 		console.log('onWhatClick');
@@ -52,4 +49,4 @@ const mapStateToProps = function(state, props) {
 
 const Container = connect(mapStateToProps)(Game);
 
-export default Container;
+module.exports = Container;

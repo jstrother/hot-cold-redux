@@ -1,7 +1,7 @@
 // called into game.jsx
 
-import React from 'react';
-import { connect } from 'react-redux';
+var React = require('react');
+var connect = require('react-redux').connect;
 
 const MainSection = React.createClass({
 	onGuessClick: function(event) {
@@ -36,4 +36,4 @@ const MainSection = React.createClass({
 
 const Container = connect()(MainSection);
 
-export default Container;
+module.exports = Container;

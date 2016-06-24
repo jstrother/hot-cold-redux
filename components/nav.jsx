@@ -1,9 +1,9 @@
 // called into header.jsx
 
-import React from 'react';
-import { connect } from 'react-redux';
-import Modal from './modal.jsx';
-import { newGame } from '../flow/actions.js';
+var React = require('react');
+var connect = require('react-redux').connect;
+var Modal = require('./modal.jsx');
+var newGame = require('../flow/actions.js').newGame;
 
 const HeaderNav = React.createClass({
 	onWhatClick: function() {
@@ -36,4 +36,4 @@ const HeaderNav = React.createClass({
 
 const Container = connect()(HeaderNav);
 
-export default Container;
+module.exports = Container;
