@@ -6,16 +6,16 @@ import { connect } from 'react-redux';
 const MainSection = React.createClass({
 	onGuessClick: function(event) {
 		event.preventDefault();
-		this.props.prevGuess.push(this.refs.userGuess.value);
+		// this.props.prevGuess.push(this.refs.userGuess.value);
 		this.props.onGuessClick(this.refs.userGuess.value);
-		this.refs.userGuess.value='';
-		this.refs.guessCount.value=this.props.prevGuess.length;
+		// this.refs.userGuess.value='';
 		console.log("prevGuess", this.props.prevGuess);
 		console.log('length', this.props.prevGuess.length);
 		console.log('feedbackMsg', this.props.feedbackMsg);
 
 	},
 	render: function() {
+		console.log(this.props);
 		return (
 			<section className="game">
 				<h2>Make your Guess!</h2>

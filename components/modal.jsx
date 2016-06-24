@@ -1,4 +1,4 @@
-// called into header.jsx
+// called into nav.jsx
 
 import React from 'react';
 import { connect } from 'react-redux';

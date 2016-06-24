@@ -12,14 +12,10 @@ const Game = React.createClass({
 			newGame()
 		)
 	},
-	numberGuess: function(guess) {
+	onGuessClick: function(guess) {
 		this.props.dispatch(
 			numberGuess(guess)
 		)
-	},
-	onGuessClick: function(userGuess) {
-		this.numberGuess(userGuess);
-		// console.log('feedbackMsg (game.jsx)', feedbackMsg);
 	},
 	onCloseClick: function() {
 		console.log('onGuessClick');
