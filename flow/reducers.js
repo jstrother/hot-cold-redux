@@ -44,14 +44,14 @@ const hotColdReducer = (state, action) => {
 			break;
 
 		case actions.OPEN_MODAL:
-			// document.getElementById('modal').className -= 'hidden';
+			document.getElementById('modal').className -= 'hidden';
 			return Object.assign({}, state, {
 				show: true
 			});
 			break;
 
 		case actions.CLOSE_MODAL:
-			// document.getElementById('modal').className += 'hidden';
+			document.getElementById('modal').className += 'hidden';
 			return Object.assign({}, state, {
 				show: false
 			});
