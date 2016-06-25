@@ -10,7 +10,6 @@ const MainSection = React.createClass({
 		this.refs.userGuess.value='';
 	},
 	render: function() {
-		console.log(this.props);
 		return (
 			<section className="game">
 				<h2>Make your Guess!</h2>

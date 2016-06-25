@@ -5,14 +5,16 @@ var connect = require('react-redux').connect;
 var HeaderNav = require('./nav.jsx');
 var HeaderModal = require('./modal.jsx');
 var newGame = require('../flow/actions.js').newGame;
+var openModal = require('../flow/actions.js').openModal;
 
 const TopHeader = React.createClass({
 	onWhatClick: function() {
 		console.log('onWhatClick');
-
+		this.props.dispatch(
+			openModal()
+		)
 	},
 	onNewClick: function() {
-		console.log('onNewClick');
 		this.props.dispatch(
 			newGame()
 		)
@@ -24,19 +26,11 @@ const TopHeader = React.createClass({
 			<HeaderNav 
 					onWhatClick={this.props.onWhatClick}
 					onNewClick={this.props.onNewClick} />
-			<HeaderModal
-					onCloseClick={this.props.onCloseClick} />
 		</div>
 		)
 	}
 });
 
-const mapStateToProps = function(state, props) {
-	return {
-
-	};
-};
-
-const Container = connect(mapStateToProps)(TopHeader);
+const Container = connect()(TopHeader);
 
 module.exports = Container;

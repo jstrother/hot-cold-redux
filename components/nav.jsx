@@ -2,20 +2,18 @@
 
 var React = require('react');
 var connect = require('react-redux').connect;
-var Modal = require('./modal.jsx');
+var HeaderModal = require('./modal.jsx');
 var newGame = require('../flow/actions.js').newGame;
 
 const HeaderNav = React.createClass({
 	onWhatClick: function() {
-		// opens Modal
 		console.log('onWhatClick');
-		Modal.setState({
-			open: !Modal.state.open
-		});
+		console.log('nav', this.state);
+		this.setState({
+			isModalOpen: !this.state.isModalOpen
+		})
 	},
 	onNewClick: function() {
-		// starts new game
-		console.log('onNewClick');
 		this.props.dispatch(
 			newGame()
 		);
@@ -27,8 +25,7 @@ const HeaderNav = React.createClass({
 					<li className="what" onClick={this.onWhatClick}>What ?</li>
 					<li className="new" onClick={this.onNewClick}>+ New Game</li>
 				</ul>
-				<Modal
-					open={this.props.open} />
+				<HeaderModal />
 			</nav>
 		);
 	}
