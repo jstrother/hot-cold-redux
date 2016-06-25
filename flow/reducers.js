@@ -10,7 +10,7 @@ const initialState = {
 	prevGuess: [],
 	guess: '',
 	feedbackMsg: 'Give it your best!',
-	isModalOpen: false
+	show: false
 };
 
 const hotColdReducer = (state, action) => {
@@ -46,14 +46,14 @@ const hotColdReducer = (state, action) => {
 		case actions.OPEN_MODAL:
 			// document.getElementById('modal').className -= 'hidden';
 			return Object.assign({}, state, {
-				isModalOpen: true
+				show: true
 			});
 			break;
 
 		case actions.CLOSE_MODAL:
 			// document.getElementById('modal').className += 'hidden';
 			return Object.assign({}, state, {
-				isModalOpen: false
+				show: false
 			});
 			break;
 	};

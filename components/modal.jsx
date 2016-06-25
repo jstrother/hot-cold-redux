@@ -2,12 +2,13 @@
 
 var React = require('react');
 var connect = require('react-redux').connect;
+var closeModal = require('../flow/actions.js').closeModal;
 
 const HeaderModal = React.createClass({
 	onCloseClick: function() {
-		this.setState({
-			open: !this.state.open
-		});
+		this.props.dispatch(
+			closeModal()
+		)
 	},
 	render: function() {
 		return (
