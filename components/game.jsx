@@ -7,11 +7,6 @@ var MainSection = require('./section.jsx');
 var { numberGuess } = require('../flow/actions.js');
 
 const Game = React.createClass({
-	newGame: function() {
-		this.props.dispatch(
-			this.newGame()
-		)
-	},
 	onGuessClick: function(guess) {
 		this.props.dispatch(
 			numberGuess(guess)
@@ -27,7 +22,9 @@ const Game = React.createClass({
 	render: function() {
 		return (
 			<div className="game">
-				<TopHeader />
+				<TopHeader
+					onWhatClick={this.onWhatClick}
+					onNewClick={this.onNewClick} />
 				<MainSection
 					onGuessClick={this.onGuessClick}
 					feedbackMsg={this.props.feedbackMsg}

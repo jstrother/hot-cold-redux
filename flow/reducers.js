@@ -16,7 +16,15 @@ const hotColdReducer = (state, action) => {
 	var state = state || initialState;
 
 	if (action.type === actions.NEW_GAME) {
-		return Object.assign({}, state, initialState);
+		return Object.assign({}, state, {
+			newGame: true,
+			randomNumber: (function(min, max) {
+					return (Math.floor(Math.random() * (max - min + 1)) + min);
+				})(1, 100),
+			prevGuess: [],
+			guess: '',
+			feedbackMsg: 'Give it your best!'
+		});
 	}
 	else if (action.type === actions.NUMBER_GUESS) {
 		let feedbackMsg = compareNumbers(action.guess, state.randomNumber, state.prevGuess.length + 1);
@@ -36,11 +44,15 @@ const hotColdReducer = (state, action) => {
 
 function compareNumbers(compare1, compare2, length) {
 	let feedbackMsg;
-	console.log('compare1', compare1, 'compare2', compare2);
 	const diff = Math.abs(compare1 - compare2);
 
   if (diff == 0) {
-    feedbackMsg = `You got it in ${length} guesses! Great guess!`;
+  	if (length == 1) {
+  		feedbackMsg = `You got it in ${length} guess! Great guess!`;
+  	}
+  	else {
+  		feedbackMsg = `You got it in ${length} guesses! Great guess!`;
+  	}
   }
   else {
 	  if (diff >= 60) {
@@ -65,10 +77,10 @@ function compareNumbers(compare1, compare2, length) {
 
   if (diff != 0) {
   	if (compare1 > compare2) {
-	    feedbackMsg += `<br /> Lower`;
+	    feedbackMsg += ` Lower`;
 		}
 		else if (compare1 < compare2) {
-	    feedbackMsg += `<br /> Higher`;
+	    feedbackMsg += ` Higher`;
 		}
   }
 

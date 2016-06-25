@@ -6,13 +6,8 @@ var connect = require('react-redux').connect;
 const MainSection = React.createClass({
 	onGuessClick: function(event) {
 		event.preventDefault();
-		// this.props.prevGuess.push(this.refs.userGuess.value);
 		this.props.onGuessClick(this.refs.userGuess.value);
-		// this.refs.userGuess.value='';
-		console.log("prevGuess", this.props.prevGuess);
-		console.log('length', this.props.prevGuess.length);
-		console.log('feedbackMsg', this.props.feedbackMsg);
-
+		this.refs.userGuess.value='';
 	},
 	render: function() {
 		console.log(this.props);
@@ -20,10 +15,10 @@ const MainSection = React.createClass({
 			<section className="game">
 				<h2>Make your Guess!</h2>
 				<form>
-					<input type="text" name="userGuess" id="userGuess" ref="userGuess" className="text" maxlength="3" autocomplete="off" placeholder="Enter your Guess" required />
+					<input type="text" name="userGuess" id="userGuess" ref="userGuess" className="text" maxlength="3" autocomplete="off" placeholder="Enter your Guess" required autofocus />
 			  			<button type="submit" id="guessButton" ref="guessButton" className="button" name="submit" value="Guess" onClick={this.onGuessClick}>Guess!</button>
 				</form>
-			  		<p>Guess #<span id="guessCount" ref="guessCount">{this.props.prevGuess.length}</span>!</p>
+			  		<p>Total Guesses: <span id="guessCount" ref="guessCount">{this.props.prevGuess.length}</span></p>
 				<ul id="guessList" ref="guessList" className="guessBox clearfix">
 					<div id="feedback" ref="feedback">
 						<p>{this.props.feedbackMsg}</p>
