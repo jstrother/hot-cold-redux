@@ -20,14 +20,16 @@ const numberGuess = (guess) => {
 const OPEN_MODAL = 'OPEN_MODAL'
 const openModal = () => {
 	return {
-		type: OPEN_MODAL
+		type: OPEN_MODAL,
+		show: true
 	};
 };
 
 const CLOSE_MODAL = 'CLOSE_MODAL';
 const closeModal = () => {
 	return {
-		type: CLOSE_MODAL
+		type: CLOSE_MODAL,
+		show: false
 	};
 };
 

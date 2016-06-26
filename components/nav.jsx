@@ -4,14 +4,14 @@ var React = require('react');
 var connect = require('react-redux').connect;
 var HeaderModal = require('./modal.jsx');
 var newGame = require('../flow/actions.js').newGame;
-var closeModal = require('../flow/actions.js').closeModal;
+var openModal = require('../flow/actions.js').openModal;
 
 const HeaderNav = React.createClass({
 	onWhatClick: function() {
 		console.log('onWhatClick');
 		console.log('modalOpen-state', this.state);
 		this.props.dispatch(
-			closeModal()
+			openModal()
 		)
 	},
 	onNewClick: function() {
@@ -26,7 +26,9 @@ const HeaderNav = React.createClass({
 					<li className="what" onClick={this.onWhatClick}>What ?</li>
 					<li className="new" onClick={this.onNewClick}>+ New Game</li>
 				</ul>
-				<HeaderModal />
+				<HeaderModal
+					id='modal'
+					show={this.state.show} />
 			</nav>
 		);
 	}
