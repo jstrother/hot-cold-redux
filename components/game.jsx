@@ -8,6 +8,7 @@ var numberGuess = require('../flow/actions.js').numberGuess;
 
 const Game = React.createClass({
 	onGuessClick: function(guess) {
+		console.log(guess);
 		this.props.dispatch(
 			numberGuess(guess)
 		)
@@ -15,7 +16,8 @@ const Game = React.createClass({
 	render: function() {
 		return (
 			<div className="game">
-				<TopHeader />
+				<TopHeader
+					show={this.props.show} />
 				<MainSection
 					onGuessClick={this.onGuessClick}
 					feedbackMsg={this.props.feedbackMsg}
@@ -30,7 +32,8 @@ const mapStateToProps = function(state, props) {
 	return {
 		feedbackMsg: state.feedbackMsg,
 		guess: state.guess,
-		prevGuess: state.prevGuess
+		prevGuess: state.prevGuess,
+		show: state.show
 	};
 };
 

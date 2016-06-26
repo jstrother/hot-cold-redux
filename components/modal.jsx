@@ -6,9 +6,10 @@ var closeModal = require('../flow/actions.js').closeModal;
 
 const HeaderModal = React.createClass({
 	onCloseClick: function() {
-		this.props.dispatch(
-			closeModal()
-		)
+		this.refs.modal.hidden=true;
+		// this.props.dispatch(
+		// 	closeModal()
+		// );
 	},
 	render: function() {
 		return (
@@ -31,6 +32,4 @@ const HeaderModal = React.createClass({
 	}
 });
 
-const Container = connect()(HeaderModal);
-
-module.exports = Container;
+module.exports = HeaderModal;

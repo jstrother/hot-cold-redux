@@ -24,8 +24,9 @@ const TopHeader = React.createClass({
 		<div className="header">
 			<h1>HOT or COLD</h1>
 			<HeaderNav 
-					onWhatClick={this.props.onWhatClick}
-					onNewClick={this.props.onNewClick} />
+					onWhatClick={this.onWhatClick}
+					onNewClick={this.onNewClick}
+					show={this.props.show} />
 		</div>
 		)
 	}

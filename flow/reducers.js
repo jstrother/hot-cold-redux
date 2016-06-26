@@ -2,32 +2,24 @@
 
 var actions = require('./actions.js');
 
-const initialState = {
-	newGame: true,
-	randomNumber: (function(min, max) {
-			return (Math.floor(Math.random() * (max - min + 1)) + min);
-		})(1, 100),
-	prevGuess: [],
-	guess: '',
-	feedbackMsg: 'Give it your best!',
-	show: false
-};
-
 const hotColdReducer = (state, action) => {
+	const initialState = {
+		newGame: true,
+		randomNumber: (function(min, max) {
+				return (Math.floor(Math.random() * (max - min + 1)) + min);
+			})(1, 100),
+		prevGuess: [],
+		guess: '',
+		feedbackMsg: 'Give it your best!',
+		show: false
+	};
 	var state = state || initialState;
 
-	switch(actions.type) {
-		
+	console.log(action);
+	switch(action.type) {
+
 		case actions.NEW_GAME:
-			return Object.assign({}, state, {
-				newGame: true,
-				randomNumber: (function(min, max) {
-						return (Math.floor(Math.random() * (max - min + 1)) + min);
-					})(1, 100),
-				prevGuess: [],
-				guess: '',
-				feedbackMsg: 'Give it your best!'
-			});
+			return Object.assign({}, state, initialState);
 			break;
 		
 		case actions.NUMBER_GUESS:
@@ -44,14 +36,12 @@ const hotColdReducer = (state, action) => {
 			break;
 
 		case actions.OPEN_MODAL:
-			document.getElementById('modal').className -= 'hidden';
 			return Object.assign({}, state, {
 				show: true
 			});
 			break;
 
 		case actions.CLOSE_MODAL:
-			document.getElementById('modal').className += 'hidden';
 			return Object.assign({}, state, {
 				show: false
 			});
