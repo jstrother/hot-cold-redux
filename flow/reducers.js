@@ -15,7 +15,6 @@ const hotColdReducer = (state, action) => {
 	};
 	var state = state || initialState;
 
-	console.log(action);
 	switch(action.type) {
 
 		case actions.NEW_GAME:
