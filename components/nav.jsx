@@ -8,11 +8,9 @@ var openModal = require('../flow/actions.js').openModal;
 
 const HeaderNav = React.createClass({
 	onWhatClick: function() {
-		console.log('onWhatClick');
-		this.refs.HeaderModal.refs.modal.hidden=false;
-		// this.props.dispatch(
-		// 	openModal()
-		// );
+		this.props.dispatch(
+			openModal()
+		);
 	},
 	onNewClick: function() {
 		this.props.dispatch(
@@ -21,13 +19,12 @@ const HeaderNav = React.createClass({
 	},
 	render: function() {
 		return (
-			<nav> 
+			<nav className="modal-container"> 
 				<ul className="clearfix">
 					<li className="what" onClick={this.onWhatClick}>What ?</li>
 					<li className="new" onClick={this.onNewClick}>+ New Game</li>
 				</ul>
 				<HeaderModal
-					ref='HeaderModal'
 					show={this.props.show} />
 			</nav>
 		);

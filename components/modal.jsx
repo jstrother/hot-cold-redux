@@ -6,14 +6,13 @@ var closeModal = require('../flow/actions.js').closeModal;
 
 const HeaderModal = React.createClass({
 	onCloseClick: function() {
-		this.refs.modal.hidden=true;
-		// this.props.dispatch(
-		// 	closeModal()
-		// );
+		this.props.dispatch(
+			closeModal()
+		);
 	},
 	render: function() {
 		return (
-			<div className="overlay" id="modal" ref="modal">
+			<div className="overlay" id="modal" ref="modal" hidden={!this.props.show} >
 				<div className="content">
 					<h3>What do I do?</h3>
 					<div>
@@ -32,4 +31,6 @@ const HeaderModal = React.createClass({
 	}
 });
 
-module.exports = HeaderModal;
+const Container = connect()(HeaderModal);
+
+module.exports = Container;

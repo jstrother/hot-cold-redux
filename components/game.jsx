@@ -8,7 +8,6 @@ var numberGuess = require('../flow/actions.js').numberGuess;
 
 const Game = React.createClass({
 	onGuessClick: function(guess) {
-		console.log(guess);
 		this.props.dispatch(
 			numberGuess(guess)
 		)
