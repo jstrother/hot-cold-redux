@@ -10,11 +10,13 @@ LeastGuesses.prototype.add = function(guess) {
 	return item;
 };
 
+const least = new LeastGuesses();
+
 const app = express();
 app.use(express.static('public'));
 
 app.get('/guesses', function(request, response) {
-	response.json(guesses);
+	response.json(least.items);
 });
 
 app.listen(8080);
