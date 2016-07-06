@@ -21917,7 +21917,7 @@
 	var redux = __webpack_require__(175);
 	var createStore = __webpack_require__(175).createStore;
 	var applyMiddleware = redux.applyMiddleware;
-	var thunk = __webpack_require__(191);
+	var thunk = __webpack_require__(191).default;
 	
 	var hotColdReducer = __webpack_require__(192).hotColdReducer;
 	

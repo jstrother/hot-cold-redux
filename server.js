@@ -1,13 +1,14 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const	jsonParser = bodyParser.json();
 
 var LeastGuesses = function() {
-	this.items = [];
+	this.guesses = 1000;
 };
-// the plan is to keep this array restricted to containing a single number- the least number of guesses used to guess the hidden hot-cold number.  I only wish to change this value if the new value is smaller than the current value. The add method below should only be used once, otherwise, use the update method.
-LeastGuesses.prototype.add = function(guess) {
-	let item = {guess: guess};
-	this.items.push(item);
-	return item;
+
+LeastGuesses.prototype.edit = function(guess) {
+	this.guesses = guess;
+	return guess;
 };
 
 const least = new LeastGuesses();
@@ -16,7 +17,12 @@ const app = express();
 app.use('/', express.static('public'));
 
 app.get('/guesses', function(request, response) {
-	response.json(least.items);
+	response.json({guesses: parseInt(least.guesses, 10)});
+});
+
+app.post('/guesses', jsonParser, function(request, response) {
+	let guess = least.edit(request.body.guesses);
+	response.status(201).json({guesses: parseInt(guess, 10)});
 });
 
 app.listen(8080);

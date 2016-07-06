@@ -3,7 +3,7 @@
 const redux = require('redux');
 const createStore = require('redux').createStore;
 const applyMiddleware = redux.applyMiddleware;
-const thunk = require('redux-thunk');
+const thunk = require('redux-thunk').default;
 
 const hotColdReducer = require('./reducers.js').hotColdReducer;
 
