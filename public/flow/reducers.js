@@ -11,7 +11,8 @@ const hotColdReducer = (state, action) => {
 		prevGuess: [],
 		guess: '',
 		feedbackMsg: 'Give it your best!',
-		show: false
+		show: false,
+		leastGuesses: 1000
 	};
 	var state = state || initialState;
 
@@ -44,6 +45,16 @@ const hotColdReducer = (state, action) => {
 			return Object.assign({}, state, {
 				show: false
 			});
+			break;
+
+		case actions.FETCH_LEAST_GUESS_SUCCESS:
+			return Object.assign({}, state, {
+				leastGuesses: leastGuesses
+			});
+			break;
+
+		case actions.FETCH_LEAST_GUESS_ERROR:
+			throw new Error('something went wrong!!!');
 			break;
 	};
 

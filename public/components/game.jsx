@@ -21,7 +21,8 @@ const Game = React.createClass({
 					onGuessClick={this.onGuessClick}
 					feedbackMsg={this.props.feedbackMsg}
 					guess={this.props.guess}
-					prevGuess={this.props.prevGuess} />
+					prevGuess={this.props.prevGuess}
+					leastGuesses={this.props.leastGuesses} />
 			</div>
 		);
 	}
@@ -32,7 +33,8 @@ const mapStateToProps = function(state, props) {
 		feedbackMsg: state.feedbackMsg,
 		guess: state.guess,
 		prevGuess: state.prevGuess,
-		show: state.show
+		show: state.show,
+		leastGuesses: state.leastGuesses
 	};
 };
 

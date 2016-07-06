@@ -21974,7 +21974,8 @@
 			prevGuess: [],
 			guess: '',
 			feedbackMsg: 'Give it your best!',
-			show: false
+			show: false,
+			leastGuesses: 1000
 		};
 		var state = state || initialState;
 	
@@ -22004,6 +22005,16 @@
 				return Object.assign({}, state, {
 					show: false
 				});
+				break;
+	
+			case actions.FETCH_LEAST_GUESS_SUCCESS:
+				return Object.assign({}, state, {
+					leastGuesses: leastGuesses
+				});
+				break;
+	
+			case actions.FETCH_LEAST_GUESS_ERROR:
+				throw new Error('something went wrong!!!');
 				break;
 		};
 	
@@ -22094,7 +22105,7 @@
 	var fetchLeastGuessSuccess = function fetchLeastGuessSuccess(least) {
 		return {
 			type: FETCH_LEAST_GUESS_SUCCESS,
-			least: least
+			leastGuesses: least
 		};
 	};
 	
@@ -22102,8 +22113,29 @@
 	var fetchLeastGuessError = function fetchLeastGuessError(least, error) {
 		return {
 			type: FETCH_LEAST_GUESS_ERROR,
-			least: least,
+			leastGuesses: least,
 			error: error
+		};
+	};
+	
+	var fetchLeastGuesses = function fetchLeastGuesses() {
+		return function (dispatch) {
+			var url = '/guesses';
+			return fetch(url).then(function (response) {
+				if (response.state < 200 || response.status >= 300) {
+					var error = new Error(response.statusText);
+					error.response = response;
+					throw error;
+				}
+				return response;
+			}).then(function (response) {
+				return response.json();
+			}).then(function (data) {
+				var leastGuesses = data.leastGuesses;
+				return dispatch(fetchLeastGuessSuccess(leastGuesses));
+			}).catch(function (error) {
+				return dispatch(fetchLeastGuessError(leastGuesses, error));
+			});
 		};
 	};
 	
@@ -22115,6 +22147,11 @@
 	exports.OPEN_MODAL = OPEN_MODAL;
 	exports.closeModal = closeModal;
 	exports.CLOSE_MODAL = CLOSE_MODAL;
+	exports.FETCH_LEAST_GUESS_SUCCESS = FETCH_LEAST_GUESS_SUCCESS;
+	exports.fetchLeastGuessSuccess = fetchLeastGuessSuccess;
+	exports.FETCH_LEAST_GUESS_ERROR = FETCH_LEAST_GUESS_ERROR;
+	exports.fetchLeastGuessError = fetchLeastGuessError;
+	exports.fetchLeastGuesses = fetchLeastGuesses;
 
 /***/ },
 /* 194 */
@@ -22146,7 +22183,8 @@
 					onGuessClick: this.onGuessClick,
 					feedbackMsg: this.props.feedbackMsg,
 					guess: this.props.guess,
-					prevGuess: this.props.prevGuess })
+					prevGuess: this.props.prevGuess,
+					leastGuesses: this.props.leastGuesses })
 			);
 		}
 	});
@@ -22156,7 +22194,8 @@
 			feedbackMsg: state.feedbackMsg,
 			guess: state.guess,
 			prevGuess: state.prevGuess,
-			show: state.show
+			show: state.show,
+			leastGuesses: state.leastGuesses
 		};
 	};
 	
@@ -22395,6 +22434,13 @@
 						{ id: 'guessCount', ref: 'guessCount' },
 						this.props.prevGuess.length
 					)
+				),
+				React.createElement(
+					'div',
+					null,
+					'Your previous best record is ',
+					this.props.leastGuesses,
+					'!'
 				),
 				React.createElement(
 					'ul',
