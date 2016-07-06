@@ -1,9 +1,12 @@
 // called into index.jsx
 
-var redux = require('redux');
-var createStore = require('redux').createStore;
-var hotColdReducer = require('./reducers.js').hotColdReducer;
+const redux = require('redux');
+const createStore = require('redux').createStore;
+const applyMiddleware = redux.applyMiddleware;
+const thunk = require('redux-thunk');
 
-const store = createStore(hotColdReducer);
+const hotColdReducer = require('./reducers.js').hotColdReducer;
+
+const store = createStore(hotColdReducer, applyMiddleware(thunk));
 
 module.exports = store;

@@ -13,7 +13,7 @@ LeastGuesses.prototype.add = function(guess) {
 const least = new LeastGuesses();
 
 const app = express();
-app.use(express.static('public'));
+app.use('/', express.static('public'));
 
 app.get('/guesses', function(request, response) {
 	response.json(least.items);

@@ -33,6 +33,23 @@ const closeModal = () => {
 	};
 };
 
+const FETCH_LEAST_GUESS_SUCCESS = 'FETCH_LEAST_GUESS_SUCCESS';
+const fetchLeastGuessSuccess = (least) => {
+	return {
+		type: FETCH_LEAST_GUESS_SUCCESS,
+		least: least
+	};
+};
+
+const FETCH_LEAST_GUESS_ERROR = 'FETCH_LEAST_GUESS_ERROR';
+const fetchLeastGuessError = (least, error) => {
+	return {
+		type: FETCH_LEAST_GUESS_ERROR,
+		least: least,
+		error: error
+	};
+};
+
 exports.newGame = newGame;
 exports.NEW_GAME = NEW_GAME;
 exports.numberGuess = numberGuess;
