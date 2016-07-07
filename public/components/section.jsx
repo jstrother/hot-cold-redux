@@ -19,7 +19,7 @@ const MainSection = React.createClass({
 				</form>
 	  		<p>Total Guesses: <span id="guessCount" ref="guessCount">{this.props.prevGuess.length}</span></p>
 				<p>
-					Your previous best record is {this.props.leastGuesses} guesses!
+					Your previous best record was {this.props.leastGuesses} guesses!
 				</p>	
 				<ul id="guessList" ref="guessList" className="guessBox clearfix">
 					<div id="feedback" ref="feedback">

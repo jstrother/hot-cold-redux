@@ -22008,6 +22008,7 @@
 				break;
 	
 			case actions.FETCH_LEAST_GUESS_SUCCESS:
+				var leastGuesses = compareLeast(parseInt(state.leastGuesses), parseInt(state.prevGuess.length));
 				return Object.assign({}, state, {
 					leastGuesses: leastGuesses
 				});
@@ -22056,6 +22057,15 @@
 		}
 	
 		return feedbackMsg;
+	}
+	
+	function compareLeast(leastGuesses, newGuesses) {
+		console.log(leastGuesses, newGuesses);
+		if (leastGuesses < newGuesses) {
+			return leastGuesses;
+		} else {
+			return newGuesses;
+		}
 	}
 	
 	exports.hotColdReducer = hotColdReducer;
@@ -22123,9 +22133,9 @@
 			var url = '/guesses';
 			if (least) {
 				var _method = 'post';
-				var _body = JSON.stringify({
+				var _body = {
 					leastGuesses: least
-				});
+				};
 			} else {
 				var _method2 = 'get';
 				var _body2 = null;
@@ -22450,7 +22460,7 @@
 				React.createElement(
 					'p',
 					null,
-					'Your previous best record is ',
+					'Your previous best record was ',
 					this.props.leastGuesses,
 					' guesses!'
 				),

@@ -55,9 +55,9 @@ const fetchLeastGuesses = (least) => {
 		const url = '/guesses';
 		if (least) {
 			const method = 'post';
-			const body = JSON.stringify({
+			const body = {
 					leastGuesses: least
-				});
+				};
 		}
 		else {
 			const method = 'get';
