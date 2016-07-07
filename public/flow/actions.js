@@ -55,14 +55,14 @@ const fetchLeastGuesses = (least) => {
 		const url = '/guesses';
 		if (least) {
 			const method = 'post';
+			const body = JSON.stringify({
+					leastGuesses: least
+				});
 		}
 		else {
 			const method = 'get';
+			const body = null;
 		}
-		// define body
-		const body = {
-			leastGuesses: least
-		};
 		return fetch(url, {
 			method: method,
 			body: body

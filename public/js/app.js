@@ -22127,9 +22127,9 @@
 				var _method2 = 'get';
 			}
 			// define body
-			var body = {
-				leastGuesses: parseInt(least)
-			};
+			var body = JSON.stringify({
+				leastGuesses: least
+			});
 			return fetch(url, {
 				method: method,
 				body: body
