@@ -22448,11 +22448,11 @@
 					)
 				),
 				React.createElement(
-					'div',
+					'p',
 					null,
 					'Your previous best record is ',
 					this.props.leastGuesses,
-					'!'
+					' guesses!'
 				),
 				React.createElement(
 					'ul',
