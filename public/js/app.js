@@ -22121,14 +22121,15 @@
 	var fetchLeastGuesses = function fetchLeastGuesses(least) {
 		return function (dispatch) {
 			var url = '/guesses';
-			// define method
 			if (least) {
 				var _method = 'post';
 			} else {
 				var _method2 = 'get';
 			}
 			// define body
-	
+			var body = {
+				leastGuesses: parseInt(least)
+			};
 			return fetch(url, {
 				method: method,
 				body: body
