@@ -2,16 +2,16 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const	jsonParser = bodyParser.json();
 
-var LeastGuesses = function() {
+const Least = function() {
 	this.leastGuesses = 1000;
 };
 
-LeastGuesses.prototype.edit = function(guess) {
+Least.prototype.edit = function(guess) {
 	this.leastGuesses = guess;
 	return guess;
 };
 
-const least = new LeastGuesses();
+const least = new Least();
 
 const app = express();
 app.use('/', express.static('public'));

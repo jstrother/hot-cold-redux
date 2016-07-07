@@ -22123,13 +22123,13 @@
 			var url = '/guesses';
 			if (least) {
 				var _method = 'post';
+				var _body = JSON.stringify({
+					leastGuesses: least
+				});
 			} else {
 				var _method2 = 'get';
+				var _body2 = null;
 			}
-			// define body
-			var body = JSON.stringify({
-				leastGuesses: least
-			});
 			return fetch(url, {
 				method: method,
 				body: body
