@@ -22118,10 +22118,21 @@
 		};
 	};
 	
-	var fetchLeastGuesses = function fetchLeastGuesses() {
+	var fetchLeastGuesses = function fetchLeastGuesses(least) {
 		return function (dispatch) {
 			var url = '/guesses';
-			return fetch(url).then(function (response) {
+			// define method
+			if (least) {
+				var _method = 'post';
+			} else {
+				var _method2 = 'get';
+			}
+			// define body
+	
+			return fetch(url, {
+				method: method,
+				body: body
+			}).then(function (response) {
 				if (response.state < 200 || response.status >= 300) {
 					var error = new Error(response.statusText);
 					error.response = response;

@@ -54,7 +54,14 @@ const fetchLeastGuesses = (least) => {
 	return function(dispatch) {
 		const url = '/guesses';
 		// define method
+		if (least) {
+			const method = 'post';
+		}
+		else {
+			const method = 'get';
+		}
 		// define body
+		
 		return fetch(url, {
 			method: method,
 			body: body
