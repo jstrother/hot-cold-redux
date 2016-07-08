@@ -17,12 +17,14 @@ const app = express();
 app.use('/', express.static('public'));
 
 app.get('/guesses', function(request, response) {
-	response.json({guesses: parseInt(least.leastGuesses, 10)});
+	console.log('app.get', least.leastGuesses);
+	response.json({leastGuesses: parseInt(least.leastGuesses, 10)});
 });
 
 app.post('/guesses', jsonParser, function(request, response) {
+	console.log('app.post', request.body.leastGuesses)
 	let guess = least.edit(request.body.leastGuesses);
-	response.status(201).json({guesses: parseInt(guess, 10)});
+	response.status(201).json({leastGuesses: parseInt(guess, 10)});
 });
 
 app.listen(8080);

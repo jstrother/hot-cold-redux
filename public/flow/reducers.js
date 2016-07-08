@@ -1,6 +1,7 @@
 // called into store.js
 
-var actions = require('./actions.js');
+const actions = require('./actions.js');
+const fetchLeastGuesses = require('./actions.js').fetchLeastGuesses;
 
 const hotColdReducer = (state, action) => {
 	const initialState = {
@@ -11,8 +12,7 @@ const hotColdReducer = (state, action) => {
 		prevGuess: [],
 		guess: '',
 		feedbackMsg: 'Give it your best!',
-		show: false,
-		leastGuesses: 1000
+		show: false
 	};
 	var state = state || initialState;
 
@@ -48,7 +48,7 @@ const hotColdReducer = (state, action) => {
 			break;
 
 		case actions.FETCH_LEAST_GUESS_SUCCESS:
-			let leastGuesses = compareLeast(state.leastGuesses, state.prevGuess.length);
+			let leastGuesses = compareLeast(state.leastGuesses, state.prevGuess.length, action.guess, state.randomNumber);
 			return Object.assign({}, state, {
 				leastGuesses: leastGuesses
 			});
@@ -107,16 +107,14 @@ function compareNumbers(compare1, compare2, length) {
   return feedbackMsg;
 }
 
-function compareLeast(leastGuesses, newGuesses) {
-	console.log(leastGuesses, newGuesses, action.guess, state.randomNumber);
-	const diff = Math.abs(action.guess - state.randomNumber);
-	if (diff === 0 && action.guess) {
-			if (leastGuesses < newGuesses) {
-			return leastGuesses;
-		}
-		else {
-			return newGuesses;
-		}
+function compareLeast(leastGuesses, newGuesses, guess, randomNumber) {
+	console.log(leastGuesses, newGuesses, guess, randomNumber);
+	const diff = Math.abs(guess - randomNumber);
+	if (diff === 0 && guess && leastGuesses > newGuesses) {
+		return newGuesses;
+	}
+	else {
+		return leastGuesses;
 	}
 }
 

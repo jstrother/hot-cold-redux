@@ -1,10 +1,11 @@
 // called into header.jsx
 
-var React = require('react');
-var connect = require('react-redux').connect;
-var HeaderModal = require('./modal.jsx');
-var newGame = require('../flow/actions.js').newGame;
-var openModal = require('../flow/actions.js').openModal;
+const React = require('react');
+const connect = require('react-redux').connect;
+const HeaderModal = require('./modal.jsx');
+const newGame = require('../flow/actions.js').newGame;
+const openModal = require('../flow/actions.js').openModal;
+const fetchLeastGuesses = require('../flow/actions.js').fetchLeastGuesses;
 
 const HeaderNav = React.createClass({
 	onWhatClick: function() {
@@ -13,6 +14,9 @@ const HeaderNav = React.createClass({
 		);
 	},
 	onNewClick: function() {
+		this.props.dispatch(
+			fetchLeastGuesses()
+		);
 		this.props.dispatch(
 			newGame()
 		);

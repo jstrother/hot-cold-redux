@@ -54,6 +54,7 @@ const fetchLeastGuesses = (least) => {
 		const url = '/guesses';
 		let method;
 		let body;
+		console.log('least', least);
 		if (least) {
 			method = 'post';
 			body = JSON.stringify({
@@ -62,15 +63,12 @@ const fetchLeastGuesses = (least) => {
 		}
 		else {
 			method = 'get';
-			body = '';
 		}
 		return fetch(url, {
 			method: method,
 			body: body
 		})
 		.then(function(response) {
-			console.log('response', response);
-			debugger;
 			if (response.state < 200 || response.status >= 300) {
 				let error = new Error(response.statusText);
 				error.response = response;
@@ -79,16 +77,15 @@ const fetchLeastGuesses = (least) => {
 			return response;
 		})
 		.then(function(response) {
-			return response.text();
+			return response.json();
 		})
 		.then(function(data) {
+			console.log('data', data);
 			let leastGuesses = data.leastGuesses;
-			return dispatch(fetchLeastGuessSuccess(leastGuesses)
-			);
+			return dispatch(fetchLeastGuessSuccess(leastGuesses));
 		})
 		.catch(function(error) {
-			return dispatch(fetchLeastGuessError(error)
-			);
+			return dispatch(fetchLeastGuessError(error));
 		});
 	}
 }
