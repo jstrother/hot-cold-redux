@@ -48,7 +48,7 @@ const hotColdReducer = (state, action) => {
 			break;
 
 		case actions.FETCH_LEAST_GUESS_SUCCESS:
-			let leastGuesses = compareLeast(parseInt(state.leastGuesses), parseInt(state.prevGuess.length));
+			let leastGuesses = compareLeast(state.leastGuesses, state.prevGuess.length);
 			return Object.assign({}, state, {
 				leastGuesses: leastGuesses
 			});
@@ -108,12 +108,15 @@ function compareNumbers(compare1, compare2, length) {
 }
 
 function compareLeast(leastGuesses, newGuesses) {
-	console.log(leastGuesses, newGuesses);	
-	if (leastGuesses < newGuesses) {
-		return leastGuesses;
-	}
-	else {
-		return newGuesses;
+	console.log(leastGuesses, newGuesses, action.guess, state.randomNumber);
+	const diff = Math.abs(action.guess - state.randomNumber);
+	if (diff === 0 && action.guess) {
+			if (leastGuesses < newGuesses) {
+			return leastGuesses;
+		}
+		else {
+			return newGuesses;
+		}
 	}
 }
 

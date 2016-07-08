@@ -22008,7 +22008,7 @@
 				break;
 	
 			case actions.FETCH_LEAST_GUESS_SUCCESS:
-				var leastGuesses = compareLeast(parseInt(state.leastGuesses), parseInt(state.prevGuess.length));
+				var leastGuesses = compareLeast(state.leastGuesses, state.prevGuess.length);
 				return Object.assign({}, state, {
 					leastGuesses: leastGuesses
 				});
@@ -22060,11 +22060,14 @@
 	}
 	
 	function compareLeast(leastGuesses, newGuesses) {
-		console.log(leastGuesses, newGuesses);
-		if (leastGuesses < newGuesses) {
-			return leastGuesses;
-		} else {
-			return newGuesses;
+		console.log(leastGuesses, newGuesses, action.guess, state.randomNumber);
+		var diff = Math.abs(action.guess - state.randomNumber);
+		if (diff === 0 && action.guess) {
+			if (leastGuesses < newGuesses) {
+				return leastGuesses;
+			} else {
+				return newGuesses;
+			}
 		}
 	}
 	
@@ -22120,10 +22123,9 @@
 	};
 	
 	var FETCH_LEAST_GUESS_ERROR = 'FETCH_LEAST_GUESS_ERROR';
-	var fetchLeastGuessError = function fetchLeastGuessError(least, error) {
+	var fetchLeastGuessError = function fetchLeastGuessError(error) {
 		return {
 			type: FETCH_LEAST_GUESS_ERROR,
-			leastGuesses: least,
 			error: error
 		};
 	};
@@ -22131,19 +22133,23 @@
 	var fetchLeastGuesses = function fetchLeastGuesses(least) {
 		return function (dispatch) {
 			var url = '/guesses';
+			var method = void 0;
+			var body = void 0;
 			if (least) {
-				var _method = 'post';
-				var _body = {
+				method = 'post';
+				body = JSON.stringify({
 					leastGuesses: least
-				};
+				});
 			} else {
-				var _method2 = 'get';
-				var _body2 = null;
+				method = 'get';
+				body = '';
 			}
 			return fetch(url, {
 				method: method,
 				body: body
 			}).then(function (response) {
+				console.log('response', response);
+				debugger;
 				if (response.state < 200 || response.status >= 300) {
 					var error = new Error(response.statusText);
 					error.response = response;
@@ -22151,12 +22157,12 @@
 				}
 				return response;
 			}).then(function (response) {
-				return response.json();
+				return response.text();
 			}).then(function (data) {
 				var leastGuesses = data.leastGuesses;
 				return dispatch(fetchLeastGuessSuccess(leastGuesses));
 			}).catch(function (error) {
-				return dispatch(fetchLeastGuessError(leastGuesses, error));
+				return dispatch(fetchLeastGuessError(error));
 			});
 		};
 	};
@@ -22419,10 +22425,14 @@
 	
 	var React = __webpack_require__(1);
 	var connect = __webpack_require__(168).connect;
+	var fetchLeastGuesses = __webpack_require__(193).fetchLeastGuesses;
 	
 	var MainSection = React.createClass({
 		displayName: 'MainSection',
 	
+		componentDidMount: function componentDidMount() {
+			this.props.dispatch(fetchLeastGuesses(this.props.leastGuesses));
+		},
 		onGuessClick: function onGuessClick(event) {
 			event.preventDefault();
 			this.props.onGuessClick(this.refs.userGuess.value);

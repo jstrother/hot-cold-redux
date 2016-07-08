@@ -1,9 +1,15 @@
 // called into game.jsx
 
-var React = require('react');
-var connect = require('react-redux').connect;
+const React = require('react');
+const connect = require('react-redux').connect;
+const fetchLeastGuesses = require('../flow/actions.js').fetchLeastGuesses;
 
 const MainSection = React.createClass({
+	componentDidMount: function() {
+		this.props.dispatch(
+			fetchLeastGuesses(this.props.leastGuesses)
+		);
+	},
 	onGuessClick: function(event) {
 		event.preventDefault();
 		this.props.onGuessClick(this.refs.userGuess.value);

@@ -42,10 +42,9 @@ const fetchLeastGuessSuccess = (least) => {
 };
 
 const FETCH_LEAST_GUESS_ERROR = 'FETCH_LEAST_GUESS_ERROR';
-const fetchLeastGuessError = (least, error) => {
+const fetchLeastGuessError = (error) => {
 	return {
 		type: FETCH_LEAST_GUESS_ERROR,
-		leastGuesses: least,
 		error: error
 	};
 };
@@ -53,21 +52,25 @@ const fetchLeastGuessError = (least, error) => {
 const fetchLeastGuesses = (least) => {
 	return function(dispatch) {
 		const url = '/guesses';
+		let method;
+		let body;
 		if (least) {
-			const method = 'post';
-			const body = {
-					leastGuesses: least
-				};
+			method = 'post';
+			body = JSON.stringify({
+								leastGuesses: least
+							});
 		}
 		else {
-			const method = 'get';
-			const body = null;
+			method = 'get';
+			body = '';
 		}
 		return fetch(url, {
 			method: method,
 			body: body
 		})
 		.then(function(response) {
+			console.log('response', response);
+			debugger;
 			if (response.state < 200 || response.status >= 300) {
 				let error = new Error(response.statusText);
 				error.response = response;
@@ -76,7 +79,7 @@ const fetchLeastGuesses = (least) => {
 			return response;
 		})
 		.then(function(response) {
-			return response.json();
+			return response.text();
 		})
 		.then(function(data) {
 			let leastGuesses = data.leastGuesses;
@@ -84,7 +87,7 @@ const fetchLeastGuesses = (least) => {
 			);
 		})
 		.catch(function(error) {
-			return dispatch(fetchLeastGuessError(leastGuesses, error)
+			return dispatch(fetchLeastGuessError(error)
 			);
 		});
 	}
