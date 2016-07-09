@@ -1,8 +1,8 @@
 // called into index.jsx
 
-const redux = require('redux');
-const createStore = require('redux').createStore;
-const applyMiddleware = redux.applyMiddleware;
+import { applyMiddleware, createStore } from 'redux';
+import logger from 'redux-logger';
+
 const thunk = require('redux-thunk').default;
 
 const hotColdReducer = require('./reducers.js').hotColdReducer;

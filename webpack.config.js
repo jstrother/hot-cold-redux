@@ -12,6 +12,7 @@ module.exports = {
 		path: __dirname,
 		filename: packageData.main
 	},
+	watch: true,
 	devtool: 'source-map',
 	module: {
 		loaders: [

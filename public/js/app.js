@@ -21912,16 +21912,13 @@
 
 	'use strict';
 	
-	// called into index.jsx
+	var _redux = __webpack_require__(175);
 	
-	var redux = __webpack_require__(175);
-	var createStore = __webpack_require__(175).createStore;
-	var applyMiddleware = redux.applyMiddleware;
-	var thunk = __webpack_require__(191).default;
+	var thunk = __webpack_require__(191).default; // called into index.jsx
 	
 	var hotColdReducer = __webpack_require__(192).hotColdReducer;
 	
-	var store = createStore(hotColdReducer, applyMiddleware(thunk));
+	var store = (0, _redux.createStore)(hotColdReducer, (0, _redux.applyMiddleware)(thunk));
 	
 	module.exports = store;
 
@@ -22157,10 +22154,9 @@
 			}).then(function (data) {
 				console.log('data', data);
 				var leastGuesses = data.leastGuesses;
-				console.log('leastGuesses', leastGuesses);
 				return dispatch(fetchLeastGuessSuccess(leastGuesses));
 			}).catch(function (error) {
-				return console.log(fetchLeastGuessError(error));
+				return dispatch(fetchLeastGuessError(error));
 			});
 		};
 	};
