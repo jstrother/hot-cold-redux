@@ -5,11 +5,12 @@ var connect = require('react-redux').connect;
 var TopHeader = require('./header.jsx');
 var MainSection = require('./section.jsx');
 var numberGuess = require('../flow/actions.js').numberGuess;
+var fetchLeastGuessSuccess = require('../flow/actions.js').fetchLeastGuessSuccess;
 
 const Game = React.createClass({
 	onGuessClick: function(guess) {
 		this.props.dispatch(
-			numberGuess(guess)
+			numberGuess(guess, this.props.randomNumber, this.props.prevGuess.length + 1)
 		)
 	},
 	render: function() {
@@ -34,7 +35,8 @@ const mapStateToProps = function(state, props) {
 		guess: state.guess,
 		prevGuess: state.prevGuess,
 		show: state.show,
-		leastGuesses: state.leastGuesses
+		leastGuesses: state.leastGuesses,
+		randomNumber: state.randomNumber
 	};
 };
 

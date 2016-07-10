@@ -10,11 +10,18 @@ const newGame = () => {
 
 // action for guessing a number
 const NUMBER_GUESS = 'NUMBER_GUESS';
-const numberGuess = (guess) => {
-		return {
-		type: NUMBER_GUESS,
-		guess
-	};
+const numberGuess = (guess, randomNumber, least) => {
+	return (dispatch) => {
+		let diff = Math.abs(guess - randomNumber);
+		if (diff === 0) {
+			return endGame(dispatch, least);
+		}
+		else {
+			return dispatch({
+				type: NUMBER_GUESS,
+				guess
+			});
+		}}
 };
 
 const OPEN_MODAL = 'OPEN_MODAL'
@@ -50,44 +57,48 @@ const fetchLeastGuessError = (error) => {
 };
 
 const fetchLeastGuesses = (least) => {
-	return function(dispatch) {
-		const url = '/guesses';
-		let method;
-		let body;
-		console.log('least', least);
-		if (least) {
-			method = 'post';
-			body = JSON.stringify({
-								leastGuesses: least
-							});
+	return (dispatch) => endGame(dispatch, least);
+};
+
+function endGame(dispatch, least) {
+	const url = '/guesses';
+	let method;
+	let body;
+	let fetchParams;
+	if (least) {
+		fetchParams = {
+			headers: {'Content-type': 'application/json'},
+			method: 'post',
+			body: JSON.stringify({
+							leastGuesses: least
+						})
+
 		}
-		else {
-			method = 'get';
-		}
-		return fetch(url, {
-			method: method,
-			body: body
-		})
-		.then(function(response) {
-			if (response.state < 200 || response.status >= 300) {
-				let error = new Error(response.statusText);
-				error.response = response;
-				throw error;
-			}
-			return response;
-		})
-		.then(function(response) {
-			return response.json();
-		})
-		.then(function(data) {
-			console.log('data', data);
-			let leastGuesses = data.leastGuesses;
-			return dispatch(fetchLeastGuessSuccess(leastGuesses));
-		})
-		.catch(function(error) {
-			return dispatch(fetchLeastGuessError(error));
-		});
 	}
+	else {
+		fetchParams = {
+		method: 'get'			
+		};
+	}
+	return fetch(url, fetchParams)
+	.then(function(response) {
+		if (response.state < 200 || response.status >= 300) {
+			let error = new Error(response.statusText);
+			error.response = response;
+			throw error;
+		}
+		return response;
+	})
+	.then(function(response) {
+		return response.json();
+	})
+	.then(function(data) {
+		let leastGuesses = data.leastGuesses;
+		return dispatch(fetchLeastGuessSuccess(leastGuesses));
+	})
+	.catch(function(error) {
+		return dispatch(fetchLeastGuessError(error));
+	});
 }
 
 exports.newGame = newGame;

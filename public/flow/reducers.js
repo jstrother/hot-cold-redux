@@ -48,7 +48,9 @@ const hotColdReducer = (state, action) => {
 			break;
 
 		case actions.FETCH_LEAST_GUESS_SUCCESS:
-			let leastGuesses = compareLeast(state.leastGuesses, state.prevGuess.length, action.guess, state.randomNumber);
+			console.log('in reducer success',  action)
+			const leastGuesses = compareLeast(action.leastGuesses, state.prevGuess.length, state.guess, state.randomNumber);
+			console.log('in reducer success',  leastGuesses)
 			return Object.assign({}, state, {
 				leastGuesses: leastGuesses
 			});
@@ -56,7 +58,6 @@ const hotColdReducer = (state, action) => {
 
 		case actions.FETCH_LEAST_GUESS_ERROR:
 			throw new Error('something went wrong!!!');
-			break;
 	};
 
 	return state;
@@ -93,10 +94,7 @@ function compareNumbers(compare1, compare2, length) {
 	  else {
 	    feedbackMsg = `Almost standing on it!`;
 	  }
-  }
-
-  if (diff != 0) {
-  	if (compare1 > compare2) {
+	  if (compare1 > compare2) {
 	    feedbackMsg += ` Lower`;
 		}
 		else if (compare1 < compare2) {
@@ -108,12 +106,25 @@ function compareNumbers(compare1, compare2, length) {
 }
 
 function compareLeast(leastGuesses, newGuesses, guess, randomNumber) {
-	console.log(leastGuesses, newGuesses, guess, randomNumber);
+	// the issue is in here where the incorrect number is being passed around somehow
+	debugger;
+	console.log('start', 'leastGuesses', leastGuesses, 'newGuesses', newGuesses, 'guess', guess, 'randomNumber', randomNumber);
+	
 	const diff = Math.abs(guess - randomNumber);
-	if (diff === 0 && guess && leastGuesses > newGuesses) {
+
+	console.log('diff', diff)
+	
+	if (diff === 0 && guess > 0 && leastGuesses > newGuesses && newGuesses > 0) {
+		
+		console.log('if', 'leastGuesses', leastGuesses, 'newGuesses', newGuesses, 'guess', guess, 'randomNumber', randomNumber);
+	
 		return newGuesses;
 	}
+	
 	else {
+	
+		console.log('else', 'leastGuesses', leastGuesses, 'newGuesses', newGuesses, 'guess', guess, 'randomNumber', randomNumber);
+	
 		return leastGuesses;
 	}
 }

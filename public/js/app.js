@@ -51,7 +51,7 @@
 	var Provider = __webpack_require__(168).Provider;
 	
 	var store = __webpack_require__(190);
-	var Game = __webpack_require__(194);
+	var Game = __webpack_require__(195);
 	
 	document.addEventListener('DOMContentLoaded', function () {
 		ReactDOM.render(React.createElement(
@@ -21914,9 +21914,17 @@
 	
 	var _redux = __webpack_require__(175);
 	
-	var thunk = __webpack_require__(191).default; // called into index.jsx
+	var _reduxLogger = __webpack_require__(191);
 	
-	var hotColdReducer = __webpack_require__(192).hotColdReducer;
+	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// called into index.jsx
+	
+	var thunk = __webpack_require__(192).default;
+	
+	var hotColdReducer = __webpack_require__(193).hotColdReducer;
 	
 	var store = (0, _redux.createStore)(hotColdReducer, (0, _redux.applyMiddleware)(thunk));
 	
@@ -21924,6 +21932,239 @@
 
 /***/ },
 /* 191 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+	
+	var repeat = function repeat(str, times) {
+	  return new Array(times + 1).join(str);
+	};
+	var pad = function pad(num, maxLength) {
+	  return repeat("0", maxLength - num.toString().length) + num;
+	};
+	var formatTime = function formatTime(time) {
+	  return "@ " + pad(time.getHours(), 2) + ":" + pad(time.getMinutes(), 2) + ":" + pad(time.getSeconds(), 2) + "." + pad(time.getMilliseconds(), 3);
+	};
+	
+	// Use the new performance api to get better precision if available
+	var timer = typeof performance !== "undefined" && typeof performance.now === "function" ? performance : Date;
+	
+	/**
+	 * parse the level option of createLogger
+	 *
+	 * @property {string | function | object} level - console[level]
+	 * @property {object} action
+	 * @property {array} payload
+	 * @property {string} type
+	 */
+	
+	function getLogLevel(level, action, payload, type) {
+	  switch (typeof level === "undefined" ? "undefined" : _typeof(level)) {
+	    case "object":
+	      return typeof level[type] === "function" ? level[type].apply(level, _toConsumableArray(payload)) : level[type];
+	    case "function":
+	      return level(action);
+	    default:
+	      return level;
+	  }
+	}
+	
+	/**
+	 * Creates logger with followed options
+	 *
+	 * @namespace
+	 * @property {object} options - options for logger
+	 * @property {string | function | object} options.level - console[level]
+	 * @property {boolean} options.duration - print duration of each action?
+	 * @property {boolean} options.timestamp - print timestamp with each action?
+	 * @property {object} options.colors - custom colors
+	 * @property {object} options.logger - implementation of the `console` API
+	 * @property {boolean} options.logErrors - should errors in action execution be caught, logged, and re-thrown?
+	 * @property {boolean} options.collapsed - is group collapsed?
+	 * @property {boolean} options.predicate - condition which resolves logger behavior
+	 * @property {function} options.stateTransformer - transform state before print
+	 * @property {function} options.actionTransformer - transform action before print
+	 * @property {function} options.errorTransformer - transform error before print
+	 */
+	
+	function createLogger() {
+	  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	  var _options$level = options.level;
+	  var level = _options$level === undefined ? "log" : _options$level;
+	  var _options$logger = options.logger;
+	  var logger = _options$logger === undefined ? console : _options$logger;
+	  var _options$logErrors = options.logErrors;
+	  var logErrors = _options$logErrors === undefined ? true : _options$logErrors;
+	  var collapsed = options.collapsed;
+	  var predicate = options.predicate;
+	  var _options$duration = options.duration;
+	  var duration = _options$duration === undefined ? false : _options$duration;
+	  var _options$timestamp = options.timestamp;
+	  var timestamp = _options$timestamp === undefined ? true : _options$timestamp;
+	  var transformer = options.transformer;
+	  var _options$stateTransfo = options.stateTransformer;
+	  var // deprecated
+	  stateTransformer = _options$stateTransfo === undefined ? function (state) {
+	    return state;
+	  } : _options$stateTransfo;
+	  var _options$actionTransf = options.actionTransformer;
+	  var actionTransformer = _options$actionTransf === undefined ? function (actn) {
+	    return actn;
+	  } : _options$actionTransf;
+	  var _options$errorTransfo = options.errorTransformer;
+	  var errorTransformer = _options$errorTransfo === undefined ? function (error) {
+	    return error;
+	  } : _options$errorTransfo;
+	  var _options$colors = options.colors;
+	  var colors = _options$colors === undefined ? {
+	    title: function title() {
+	      return "#000000";
+	    },
+	    prevState: function prevState() {
+	      return "#9E9E9E";
+	    },
+	    action: function action() {
+	      return "#03A9F4";
+	    },
+	    nextState: function nextState() {
+	      return "#4CAF50";
+	    },
+	    error: function error() {
+	      return "#F20404";
+	    }
+	  } : _options$colors;
+	
+	  // exit if console undefined
+	
+	  if (typeof logger === "undefined") {
+	    return function () {
+	      return function (next) {
+	        return function (action) {
+	          return next(action);
+	        };
+	      };
+	    };
+	  }
+	
+	  if (transformer) {
+	    console.error("Option 'transformer' is deprecated, use stateTransformer instead");
+	  }
+	
+	  var logBuffer = [];
+	  function printBuffer() {
+	    logBuffer.forEach(function (logEntry, key) {
+	      var started = logEntry.started;
+	      var startedTime = logEntry.startedTime;
+	      var action = logEntry.action;
+	      var prevState = logEntry.prevState;
+	      var error = logEntry.error;
+	      var took = logEntry.took;
+	      var nextState = logEntry.nextState;
+	
+	      var nextEntry = logBuffer[key + 1];
+	      if (nextEntry) {
+	        nextState = nextEntry.prevState;
+	        took = nextEntry.started - started;
+	      }
+	      // message
+	      var formattedAction = actionTransformer(action);
+	      var isCollapsed = typeof collapsed === "function" ? collapsed(function () {
+	        return nextState;
+	      }, action) : collapsed;
+	
+	      var formattedTime = formatTime(startedTime);
+	      var titleCSS = colors.title ? "color: " + colors.title(formattedAction) + ";" : null;
+	      var title = "action " + (timestamp ? formattedTime : "") + " " + formattedAction.type + " " + (duration ? "(in " + took.toFixed(2) + " ms)" : "");
+	
+	      // render
+	      try {
+	        if (isCollapsed) {
+	          if (colors.title) logger.groupCollapsed("%c " + title, titleCSS);else logger.groupCollapsed(title);
+	        } else {
+	          if (colors.title) logger.group("%c " + title, titleCSS);else logger.group(title);
+	        }
+	      } catch (e) {
+	        logger.log(title);
+	      }
+	
+	      var prevStateLevel = getLogLevel(level, formattedAction, [prevState], "prevState");
+	      var actionLevel = getLogLevel(level, formattedAction, [formattedAction], "action");
+	      var errorLevel = getLogLevel(level, formattedAction, [error, prevState], "error");
+	      var nextStateLevel = getLogLevel(level, formattedAction, [nextState], "nextState");
+	
+	      if (prevStateLevel) {
+	        if (colors.prevState) logger[prevStateLevel]("%c prev state", "color: " + colors.prevState(prevState) + "; font-weight: bold", prevState);else logger[prevStateLevel]("prev state", prevState);
+	      }
+	
+	      if (actionLevel) {
+	        if (colors.action) logger[actionLevel]("%c action", "color: " + colors.action(formattedAction) + "; font-weight: bold", formattedAction);else logger[actionLevel]("action", formattedAction);
+	      }
+	
+	      if (error && errorLevel) {
+	        if (colors.error) logger[errorLevel]("%c error", "color: " + colors.error(error, prevState) + "; font-weight: bold", error);else logger[errorLevel]("error", error);
+	      }
+	
+	      if (nextStateLevel) {
+	        if (colors.nextState) logger[nextStateLevel]("%c next state", "color: " + colors.nextState(nextState) + "; font-weight: bold", nextState);else logger[nextStateLevel]("next state", nextState);
+	      }
+	
+	      try {
+	        logger.groupEnd();
+	      } catch (e) {
+	        logger.log("—— log end ——");
+	      }
+	    });
+	    logBuffer.length = 0;
+	  }
+	
+	  return function (_ref) {
+	    var getState = _ref.getState;
+	    return function (next) {
+	      return function (action) {
+	        // exit early if predicate function returns false
+	        if (typeof predicate === "function" && !predicate(getState, action)) {
+	          return next(action);
+	        }
+	
+	        var logEntry = {};
+	        logBuffer.push(logEntry);
+	
+	        logEntry.started = timer.now();
+	        logEntry.startedTime = new Date();
+	        logEntry.prevState = stateTransformer(getState());
+	        logEntry.action = action;
+	
+	        var returnedValue = undefined;
+	        if (logErrors) {
+	          try {
+	            returnedValue = next(action);
+	          } catch (e) {
+	            logEntry.error = errorTransformer(e);
+	          }
+	        } else {
+	          returnedValue = next(action);
+	        }
+	
+	        logEntry.took = timer.now() - logEntry.started;
+	        logEntry.nextState = stateTransformer(getState());
+	
+	        printBuffer();
+	
+	        if (logEntry.error) throw logEntry.error;
+	        return returnedValue;
+	      };
+	    };
+	  };
+	}
+	
+	module.exports = createLogger;
+
+/***/ },
+/* 192 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21951,7 +22192,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 192 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21960,8 +22201,8 @@
 	
 	// called into store.js
 	
-	var actions = __webpack_require__(193);
-	var fetchLeastGuesses = __webpack_require__(193).fetchLeastGuesses;
+	var actions = __webpack_require__(194);
+	var fetchLeastGuesses = __webpack_require__(194).fetchLeastGuesses;
 	
 	var hotColdReducer = function hotColdReducer(state, action) {
 		var initialState = {
@@ -22005,7 +22246,9 @@
 				break;
 	
 			case actions.FETCH_LEAST_GUESS_SUCCESS:
-				var leastGuesses = compareLeast(state.leastGuesses, state.prevGuess.length, action.guess, state.randomNumber);
+				console.log('in reducer success', action);
+				var leastGuesses = compareLeast(action.leastGuesses, state.prevGuess.length, state.guess, state.randomNumber);
+				console.log('in reducer success', leastGuesses);
 				return Object.assign({}, state, {
 					leastGuesses: leastGuesses
 				});
@@ -22013,7 +22256,6 @@
 	
 			case actions.FETCH_LEAST_GUESS_ERROR:
 				throw new Error('something went wrong!!!');
-				break;
 		};
 	
 		return state;
@@ -22043,9 +22285,6 @@
 			} else {
 				feedbackMsg = 'Almost standing on it!';
 			}
-		}
-	
-		if (diff != 0) {
 			if (compare1 > compare2) {
 				feedbackMsg += ' Lower';
 			} else if (compare1 < compare2) {
@@ -22057,11 +22296,22 @@
 	}
 	
 	function compareLeast(leastGuesses, newGuesses, guess, randomNumber) {
-		console.log(leastGuesses, newGuesses, guess, randomNumber);
+		debugger;
+		console.log('start', 'leastGuesses', leastGuesses, 'newGuesses', newGuesses, 'guess', guess, 'randomNumber', randomNumber);
+	
 		var diff = Math.abs(guess - randomNumber);
-		if (diff === 0 && guess && leastGuesses > newGuesses) {
+	
+		console.log('diff', diff);
+	
+		if (diff === 0 && guess > 0 && leastGuesses > newGuesses && newGuesses > 0) {
+	
+			console.log('if', 'leastGuesses', leastGuesses, 'newGuesses', newGuesses, 'guess', guess, 'randomNumber', randomNumber);
+	
 			return newGuesses;
 		} else {
+	
+			console.log('else', 'leastGuesses', leastGuesses, 'newGuesses', newGuesses, 'guess', guess, 'randomNumber', randomNumber);
+	
 			return leastGuesses;
 		}
 	}
@@ -22069,7 +22319,7 @@
 	exports.hotColdReducer = hotColdReducer;
 
 /***/ },
-/* 193 */
+/* 194 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22086,10 +22336,17 @@
 	
 	// action for guessing a number
 	var NUMBER_GUESS = 'NUMBER_GUESS';
-	var numberGuess = function numberGuess(guess) {
-		return {
-			type: NUMBER_GUESS,
-			guess: guess
+	var numberGuess = function numberGuess(guess, randomNumber, least) {
+		return function (dispatch) {
+			var diff = Math.abs(guess - randomNumber);
+			if (diff === 0) {
+				return endGame(dispatch, least);
+			} else {
+				return dispatch({
+					type: NUMBER_GUESS,
+					guess: guess
+				});
+			}
 		};
 	};
 	
@@ -22127,39 +22384,45 @@
 	
 	var fetchLeastGuesses = function fetchLeastGuesses(least) {
 		return function (dispatch) {
-			var url = '/guesses';
-			var method = void 0;
-			var body = void 0;
-			console.log('least', least);
-			if (least) {
-				method = 'post';
-				body = JSON.stringify({
-					leastGuesses: least
-				});
-			} else {
-				method = 'get';
-			}
-			return fetch(url, {
-				method: method,
-				body: body
-			}).then(function (response) {
-				if (response.state < 200 || response.status >= 300) {
-					var error = new Error(response.statusText);
-					error.response = response;
-					throw error;
-				}
-				return response;
-			}).then(function (response) {
-				return response.json();
-			}).then(function (data) {
-				console.log('data', data);
-				var leastGuesses = data.leastGuesses;
-				return dispatch(fetchLeastGuessSuccess(leastGuesses));
-			}).catch(function (error) {
-				return dispatch(fetchLeastGuessError(error));
-			});
+			return endGame(dispatch, least);
 		};
 	};
+	
+	function endGame(dispatch, least) {
+		var url = '/guesses';
+		var method = void 0;
+		var body = void 0;
+		var fetchParams = void 0;
+		if (least) {
+			fetchParams = {
+				headers: { 'Content-type': 'application/json' },
+				method: 'post',
+				body: JSON.stringify({
+					leastGuesses: least
+				})
+	
+			};
+		} else {
+			fetchParams = {
+				method: 'get'
+			};
+		}
+		return fetch(url, fetchParams).then(function (response) {
+			if (response.state < 200 || response.status >= 300) {
+				var error = new Error(response.statusText);
+				error.response = response;
+				throw error;
+			}
+			return response;
+		}).then(function (response) {
+			return response.json();
+		}).then(function (data) {
+			var leastGuesses = data.leastGuesses;
+			return dispatch(fetchLeastGuessSuccess(leastGuesses));
+		}).catch(function (error) {
+			return dispatch(fetchLeastGuessError(error));
+		});
+	}
 	
 	exports.newGame = newGame;
 	exports.NEW_GAME = NEW_GAME;
@@ -22176,7 +22439,7 @@
 	exports.fetchLeastGuesses = fetchLeastGuesses;
 
 /***/ },
-/* 194 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22185,15 +22448,16 @@
 	
 	var React = __webpack_require__(1);
 	var connect = __webpack_require__(168).connect;
-	var TopHeader = __webpack_require__(195);
-	var MainSection = __webpack_require__(198);
-	var numberGuess = __webpack_require__(193).numberGuess;
+	var TopHeader = __webpack_require__(196);
+	var MainSection = __webpack_require__(199);
+	var numberGuess = __webpack_require__(194).numberGuess;
+	var fetchLeastGuessSuccess = __webpack_require__(194).fetchLeastGuessSuccess;
 	
 	var Game = React.createClass({
 		displayName: 'Game',
 	
 		onGuessClick: function onGuessClick(guess) {
-			this.props.dispatch(numberGuess(guess));
+			this.props.dispatch(numberGuess(guess, this.props.randomNumber, this.props.prevGuess.length + 1));
 		},
 		render: function render() {
 			return React.createElement(
@@ -22217,7 +22481,8 @@
 			guess: state.guess,
 			prevGuess: state.prevGuess,
 			show: state.show,
-			leastGuesses: state.leastGuesses
+			leastGuesses: state.leastGuesses,
+			randomNumber: state.randomNumber
 		};
 	};
 	
@@ -22226,7 +22491,7 @@
 	module.exports = Container;
 
 /***/ },
-/* 195 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22235,9 +22500,9 @@
 	
 	var React = __webpack_require__(1);
 	var connect = __webpack_require__(168).connect;
-	var HeaderNav = __webpack_require__(196);
-	var newGame = __webpack_require__(193).newGame;
-	var openModal = __webpack_require__(193).openModal;
+	var HeaderNav = __webpack_require__(197);
+	var newGame = __webpack_require__(194).newGame;
+	var openModal = __webpack_require__(194).openModal;
 	
 	var TopHeader = React.createClass({
 		displayName: 'TopHeader',
@@ -22264,7 +22529,7 @@
 	module.exports = Container;
 
 /***/ },
-/* 196 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22273,10 +22538,10 @@
 	
 	var React = __webpack_require__(1);
 	var connect = __webpack_require__(168).connect;
-	var HeaderModal = __webpack_require__(197);
-	var newGame = __webpack_require__(193).newGame;
-	var openModal = __webpack_require__(193).openModal;
-	var fetchLeastGuesses = __webpack_require__(193).fetchLeastGuesses;
+	var HeaderModal = __webpack_require__(198);
+	var newGame = __webpack_require__(194).newGame;
+	var openModal = __webpack_require__(194).openModal;
+	var fetchLeastGuesses = __webpack_require__(194).fetchLeastGuesses;
 	
 	var HeaderNav = React.createClass({
 		displayName: 'HeaderNav',
@@ -22317,7 +22582,7 @@
 	module.exports = Container;
 
 /***/ },
-/* 197 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22326,7 +22591,7 @@
 	
 	var React = __webpack_require__(1);
 	var connect = __webpack_require__(168).connect;
-	var closeModal = __webpack_require__(193).closeModal;
+	var closeModal = __webpack_require__(194).closeModal;
 	
 	var HeaderModal = React.createClass({
 		displayName: 'HeaderModal',
@@ -22412,7 +22677,7 @@
 	module.exports = Container;
 
 /***/ },
-/* 198 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22421,7 +22686,7 @@
 	
 	var React = __webpack_require__(1);
 	var connect = __webpack_require__(168).connect;
-	var fetchLeastGuesses = __webpack_require__(193).fetchLeastGuesses;
+	var fetchLeastGuesses = __webpack_require__(194).fetchLeastGuesses;
 	
 	var MainSection = React.createClass({
 		displayName: 'MainSection',

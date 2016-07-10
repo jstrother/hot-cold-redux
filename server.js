@@ -22,7 +22,7 @@ app.get('/guesses', function(request, response) {
 });
 
 app.post('/guesses', jsonParser, function(request, response) {
-	console.log('app.post', request.body.leastGuesses)
+	console.log('app.post', request.body)
 	let guess = least.edit(request.body.leastGuesses);
 	response.status(201).json({leastGuesses: parseInt(guess, 10)});
 });
