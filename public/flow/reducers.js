@@ -120,7 +120,7 @@ function compareLeast(leastGuesses, newGuesses, guess, randomNumber) {
 	if (diff === 0 && guess > 0 && leastGuesses > newGuesses && newGuesses > 0) {
 		// the issue is in here where the incorrect number is being passed around somehow
 		
-		// well, i can either get it to work, but showing one less, or i can get it to not work.  no matter how i try to adjust for the difference of 1, i can't get this damn thing to work!!
+		// well, i can either get it to work, but showing one less, or i can get it to not work.  no matter how i try to adjust for the difference of 1, i can't get this thing to work!!
 
 		console.log('if block compareLeast', 'leastGuesses', leastGuesses, 'newGuesses', newGuesses);
 	
