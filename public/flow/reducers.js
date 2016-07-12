@@ -2,6 +2,7 @@
 
 const actions = require('./actions.js');
 const fetchLeastGuesses = require('./actions.js').fetchLeastGuesses;
+const compareNumbers = require('./actions.js').compareNumbers;
 
 const hotColdReducer = (state, action) => {
 	const initialState = {
@@ -20,10 +21,9 @@ const hotColdReducer = (state, action) => {
 
 		case actions.NEW_GAME:
 			return Object.assign({}, state, initialState);
-			break;
 		
 		case actions.NUMBER_GUESS:
-			let feedbackMsg = compareNumbers(action.guess, state.randomNumber, state.prevGuess.length + 1);
+			let feedbackMsg = compareNumbers(parseInt(action.guess), state.randomNumber, state.prevGuess.length + 1);
 			return Object.assign({}, state, {
 				newGame: false,
 				guess: action.guess,
@@ -33,28 +33,25 @@ const hotColdReducer = (state, action) => {
 				],
 				feedbackMsg: feedbackMsg
 			});
-			break;
 
 		case actions.OPEN_MODAL:
 			return Object.assign({}, state, {
 				show: true
 			});
-			break;
 
 		case actions.CLOSE_MODAL:
 			return Object.assign({}, state, {
 				show: false
 			});
-			break;
 
 		case actions.FETCH_LEAST_GUESS_SUCCESS:
+			
 			console.log('before compareLeast', 'newGuesses', state.prevGuess.length);
 			const leastGuesses = compareLeast(action.leastGuesses, state.prevGuess.length, state.guess, state.randomNumber);
 			console.log('after compareLeast',  leastGuesses)
 			return Object.assign({}, state, {
 				leastGuesses: leastGuesses
 			});
-			break;
 
 		case actions.FETCH_LEAST_GUESS_ERROR:
 			throw new Error('something went wrong!!!');
@@ -62,48 +59,6 @@ const hotColdReducer = (state, action) => {
 
 	return state;
 };
-
-function compareNumbers(compare1, compare2, length) {
-	let feedbackMsg;
-	const diff = Math.abs(compare1 - compare2) - 1;
-
-  if (diff == 0) {
-  	if (length == 1) {
-  		feedbackMsg = `You got it in ${length} guess! Great guess!`;
-  	}
-  	else {
-  		feedbackMsg = `You got it in ${length} guesses! Great guess!`;
-  	}
-  }
-  else {
-	  if (diff >= 60) {
-		  feedbackMsg = `Freezing.`;
-	  }
-	  else if (diff >= 45) {
-	    feedbackMsg = `Cold.`;
-	  }
-	  else if (diff >= 35) {
-	    feedbackMsg = `So-so.`;
-	  }
-	  else if (diff >= 15 ) {
-	    feedbackMsg = `Warmer!`;
-	  }
-	  else if (diff >= 5) {
-	    feedbackMsg = `HOT HOT HOT!!!`;
-	  }
-	  else {
-	    feedbackMsg = `Almost standing on it!`;
-	  }
-	  if (compare1 > compare2) {
-	    feedbackMsg += ` Lower`;
-		}
-		else if (compare1 < compare2) {
-	    feedbackMsg += ` Higher`;
-		}
-  }
-
-  return feedbackMsg;
-}
 
 function compareLeast(leastGuesses, newGuesses, guess, randomNumber) {
 	console.log('start compareLeast', 'leastGuesses', leastGuesses, 'newGuesses', newGuesses);
@@ -116,15 +71,12 @@ function compareLeast(leastGuesses, newGuesses, guess, randomNumber) {
 	guess -= smallDiff;
 
 	const diff = Math.abs(guess - randomNumber);
-	
-	if (diff === 0 && guess > 0 && leastGuesses > newGuesses && newGuesses > 0) {
-		// the issue is in here where the incorrect number is being passed around somehow
-		
-		// well, i can either get it to work, but showing one less, or i can get it to not work.  no matter how i try to adjust for the difference of 1, i can't get this thing to work!!
+
+	if (diff === 0) {
 
 		console.log('if block compareLeast', 'leastGuesses', leastGuesses, 'newGuesses', newGuesses);
 	
-		return newGuesses;
+		return newGuesses + 1;
 	}
 	
 	else {

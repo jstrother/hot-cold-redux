@@ -12,9 +12,11 @@ const newGame = () => {
 const NUMBER_GUESS = 'NUMBER_GUESS';
 const numberGuess = (guess, randomNumber, least) => {
 	return (dispatch) => {
+	debugger;
+		let feedbackMsg;
 		let diff = Math.abs(guess - randomNumber);
 		if (diff === 0) {
-			return endGame(dispatch, least);
+			return endGame(dispatch, least, guess, randomNumber);
 		}
 		else {
 			return dispatch({
@@ -56,29 +58,75 @@ const fetchLeastGuessError = (error) => {
 	};
 };
 
-const fetchLeastGuesses = (least) => {
-	return (dispatch) => endGame(dispatch, least);
+const fetchLeastGuesses = (least, guess, randomNumber) => {
+	return (dispatch) => endGame(dispatch, least, guess, randomNumber);
 };
 
-function endGame(dispatch, least) {
+const compareNumbers = (compare1, compare2, length)  =>{
+	let feedbackMsg;
+	const diff = Math.abs(compare1 - compare2);
+
+  if (diff == 0) {
+  	if (length == 1) {
+  		feedbackMsg = `You got it in ${length} guess! Great guess!`;
+  	}
+  	else {
+  		feedbackMsg = `You got it in ${length} guesses! Great guess!`;
+  	}
+  }
+  else {
+	  if (diff >= 60) {
+		  feedbackMsg = `Freezing.`;
+	  }
+	  else if (diff >= 45) {
+	    feedbackMsg = `Cold.`;
+	  }
+	  else if (diff >= 35) {
+	    feedbackMsg = `So-so.`;
+	  }
+	  else if (diff >= 15 ) {
+	    feedbackMsg = `Warmer!`;
+	  }
+	  else if (diff >= 5) {
+	    feedbackMsg = `HOT HOT HOT!!!`;
+	  }
+	  else {
+	    feedbackMsg = `Almost standing on it!`;
+	  }
+	  if (compare1 > compare2) {
+	    feedbackMsg += ` Lower`;
+		}
+		else if (compare1 < compare2) {
+	    feedbackMsg += ` Higher`;
+		}
+  }
+
+  return feedbackMsg;
+}
+
+function endGame(dispatch, least, guess, randomNumber) {
 	const url = '/guesses';
 	let method;
 	let body;
 	let fetchParams;
 	if (least) {
+		method = 'post';
+		body = JSON.stringify({
+							leastGuesses: least
+						});
 		fetchParams = {
 			headers: {'Content-type': 'application/json'},
-			method: 'post',
-			body: JSON.stringify({
-							leastGuesses: least
-						})
-
+			method: method,
+			body: body
 		}
+		feedbackMsg = compareNumbers(guess, randomNumber, least);
 	}
 	else {
+		method = 'get';
 		fetchParams = {
-		method: 'get'			
+		method: method		
 		};
+		feedbackMsg = compareNumbers(guess, randomNumber, least);
 	}
 	return fetch(url, fetchParams)
 	.then(function(response) {
@@ -114,3 +162,4 @@ exports.fetchLeastGuessSuccess = fetchLeastGuessSuccess;
 exports.FETCH_LEAST_GUESS_ERROR = FETCH_LEAST_GUESS_ERROR;
 exports.fetchLeastGuessError = fetchLeastGuessError;
 exports.fetchLeastGuesses = fetchLeastGuesses;
+exports.compareNumbers = compareNumbers;
