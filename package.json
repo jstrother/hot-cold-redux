@@ -7,7 +7,10 @@
   "scripts": {
     "start": "webpack-dev-server",
     "serve": "nodemon server.js",
-    "build": "webpack"
+    "build": "webpack",
+    "ac": "git add --all && git commit -m",
+    "push": "git push origin master && git push origin gh-pages && git status",
+    "pull": "git pull origin master && git status"
   },
   "author": "",
   "license": "ISC",
