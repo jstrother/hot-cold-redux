@@ -17,7 +17,7 @@ const MainSection = React.createClass({
 	},
 	render: function() {
 		return (
-			<section className="game">
+			<section className="play">
 				<h2>Make your Guess!</h2>
 				<form>
 					<input type="text" name="userGuess" id="userGuess" ref="userGuess" className="text" maxlength="3" autocomplete="off" placeholder="Enter your Guess" required autofocus />

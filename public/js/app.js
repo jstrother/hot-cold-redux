@@ -24009,7 +24009,7 @@
 		render: function render() {
 			return React.createElement(
 				'section',
-				{ className: 'game' },
+				{ className: 'play' },
 				React.createElement(
 					'h2',
 					null,
