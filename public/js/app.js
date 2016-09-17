@@ -23870,12 +23870,12 @@
 					React.createElement(
 						'li',
 						{ className: 'what', onClick: this.onWhatClick },
-						'What ?'
+						'How to Play'
 					),
 					React.createElement(
 						'li',
 						{ className: 'new', onClick: this.onNewClick },
-						'+ New Game'
+						'Start New Game'
 					)
 				),
 				React.createElement(HeaderModal, {
