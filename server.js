@@ -2,7 +2,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const	jsonParser = bodyParser.json();
+const jsonParser = bodyParser.json();
 
 const Least = function() {
 	this.leastGuesses = 1000;
