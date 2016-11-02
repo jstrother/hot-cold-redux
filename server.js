@@ -29,4 +29,4 @@ app.post('/guesses', jsonParser, function(request, response) {
 	response.status(201).json({leastGuesses: parseInt(guess, 10)});
 });
 
-app.listen(8080);
+app.listen(process.env.PORT || 8080);
