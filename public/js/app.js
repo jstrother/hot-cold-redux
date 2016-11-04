@@ -24180,6 +24180,7 @@
 	var NEW_GAME = 'NEW_GAME';
 	var newGame = function newGame() {
 		document.getElementById('totalGuessesDiv').style.display = 'block';
+		document.getElementById('feedback').style.display = 'block';
 		document.getElementById('leastGuessesDiv').style.display = 'none';
 		return {
 			type: NEW_GAME
@@ -24245,6 +24246,7 @@
 	
 		if (diff === 0) {
 			document.getElementById('totalGuessesDiv').style.display = 'none';
+			document.getElementById('feedback').style.display = 'none';
 			document.getElementById('leastGuessesDiv').style.display = 'block';
 			if (length === 1) {
 				feedbackMsg = 'Yes! ' + compare1 + '! You got it in ' + length + ' guess! Great guess!';
