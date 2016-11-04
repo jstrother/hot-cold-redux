@@ -1,5 +1,8 @@
 // called into reducers.js
 
+// 
+let feedbackMsg;
+
 // action for new game
 const NEW_GAME = 'NEW_GAME';
 const newGame = () => {
@@ -12,8 +15,6 @@ const newGame = () => {
 const NUMBER_GUESS = 'NUMBER_GUESS';
 const numberGuess = (guess, randomNumber, least) => {
 	return (dispatch) => {
-	debugger;
-		let feedbackMsg;
 		let diff = Math.abs(guess - randomNumber);
 		if (diff === 0) {
 			return endGame(dispatch, least, guess, randomNumber);
@@ -23,10 +24,10 @@ const numberGuess = (guess, randomNumber, least) => {
 				type: NUMBER_GUESS,
 				guess
 			});
-		}}
+		}};
 };
 
-const OPEN_MODAL = 'OPEN_MODAL'
+const OPEN_MODAL = 'OPEN_MODAL';
 const openModal = () => {
 	return {
 		type: OPEN_MODAL,
@@ -63,7 +64,6 @@ const fetchLeastGuesses = (least, guess, randomNumber) => {
 };
 
 const compareNumbers = (compare1, compare2, length)  =>{
-	let feedbackMsg;
 	const diff = Math.abs(compare1 - compare2);
 
   if (diff == 0) {
@@ -102,7 +102,7 @@ const compareNumbers = (compare1, compare2, length)  =>{
   }
 
   return feedbackMsg;
-}
+};
 
 function endGame(dispatch, least, guess, randomNumber) {
 	const url = '/guesses';
@@ -118,7 +118,7 @@ function endGame(dispatch, least, guess, randomNumber) {
 			headers: {'Content-type': 'application/json'},
 			method: method,
 			body: body
-		}
+		};
 		feedbackMsg = compareNumbers(guess, randomNumber, least);
 	}
 	else {

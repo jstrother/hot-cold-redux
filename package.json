@@ -7,7 +7,8 @@
   "scripts": {
     "start": "webpack-dev-server",
     "serve": "nodemon server.js",
-    "build": "webpack"
+    "build": "webpack",
+    "source": "source .bash_profile"
   },
   "author": "",
   "license": "ISC",

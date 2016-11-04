@@ -20,7 +20,7 @@ const MainSection = React.createClass({
 			<section className="play">
 				<h2>Make your Guess!</h2>
 				<form>
-					<input type="text" name="userGuess" id="userGuess" ref="userGuess" className="text" maxlength="3" autocomplete="off" placeholder="Enter your Guess" required autofocus />
+					<input type="text" name="userGuess" id="userGuess" ref="userGuess" className="text" maxLength="3" autoComplete="off" placeholder="Enter your Guess" required />
 			  			<button type="submit" id="guessButton" ref="guessButton" className="button" name="submit" value="Guess" onClick={this.onGuessClick}>Guess!</button>
 				</form>
 	  		<p>Total Guesses: <span id="guessCount" ref="guessCount">{this.props.prevGuess.length}</span></p>

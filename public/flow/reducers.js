@@ -15,7 +15,7 @@ const hotColdReducer = (state, action) => {
 		feedbackMsg: 'Give it your best!',
 		show: false
 	};
-	var state = state || initialState;
+	state = state || initialState;
 
 	switch(action.type) {
 
@@ -48,14 +48,14 @@ const hotColdReducer = (state, action) => {
 			
 			console.log('before compareLeast', 'newGuesses', state.prevGuess.length);
 			const leastGuesses = compareLeast(action.leastGuesses, state.prevGuess.length, state.guess, state.randomNumber);
-			console.log('after compareLeast',  leastGuesses)
+			console.log('after compareLeast',  leastGuesses);
 			return Object.assign({}, state, {
 				leastGuesses: leastGuesses
 			});
 
 		case actions.FETCH_LEAST_GUESS_ERROR:
 			throw new Error('something went wrong!!!');
-	};
+	}
 
 	return state;
 };
