@@ -24243,9 +24243,9 @@
 	
 		if (diff == 0) {
 			if (length == 1) {
-				feedbackMsg = 'You got it in ' + length + ' guess! Great guess!';
+				feedbackMsg = 'Yes! ' + compare1 + '! You got it in ' + length + ' guess! Great guess!';
 			} else {
-				feedbackMsg = 'You got it in ' + length + ' guesses! Great guess!';
+				feedbackMsg = 'Yes! ' + compare1 + '! You got it in ' + length + ' guesses! Great guess!';
 			}
 		} else {
 			if (diff >= 60) {
