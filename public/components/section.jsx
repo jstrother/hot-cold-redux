@@ -24,9 +24,9 @@ const MainSection = React.createClass({
 			  			<button type="submit" id="guessButton" ref="guessButton" className="button" name="submit" value="Guess" onClick={this.onGuessClick}>Guess!</button>
 				</form>
 	  		<p>Total Guesses: <span id="guessCount" ref="guessCount">{this.props.prevGuess.length}</span></p>
-				<p>
-					Your previous best record was {this.props.leastGuesses} guesses!
-				</p>	
+				<div id="leastGuessesDiv" ref="leastGuesses">
+					<p>Your previous best record was {this.props.leastGuesses} guesses!</p>
+				</div>
 				<ul id="guessList" ref="guessList" className="guessBox clearfix">
 					<div id="feedback" ref="feedback">
 						<p>{this.props.feedbackMsg}</p>

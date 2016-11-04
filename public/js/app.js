@@ -24242,7 +24242,8 @@
 		var diff = Math.abs(compare1 - compare2);
 	
 		if (diff === 0) {
-			if (length == 1) {
+			document.getElementById('leastGuessesDiv').style.display = 'block';
+			if (length === 1) {
 				feedbackMsg = 'Yes! ' + compare1 + '! You got it in ' + length + ' guess! Great guess!';
 			} else {
 				feedbackMsg = 'Yes! ' + compare1 + '! You got it in ' + length + ' guesses! Great guess!';
@@ -24617,11 +24618,15 @@
 					)
 				),
 				React.createElement(
-					'p',
-					null,
-					'Your previous best record was ',
-					this.props.leastGuesses,
-					' guesses!'
+					'div',
+					{ id: 'leastGuessesDiv', ref: 'leastGuesses' },
+					React.createElement(
+						'p',
+						null,
+						'Your previous best record was ',
+						this.props.leastGuesses,
+						' guesses!'
+					)
 				),
 				React.createElement(
 					'ul',
