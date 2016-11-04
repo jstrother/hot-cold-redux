@@ -66,7 +66,7 @@ const fetchLeastGuesses = (least, guess, randomNumber) => {
 const compareNumbers = (compare1, compare2, length)  =>{
 	const diff = Math.abs(compare1 - compare2);
 
-  if (diff == 0) {
+  if (diff === 0) {
   	if (length == 1) {
   		feedbackMsg = `Yes! ${compare1}! You got it in ${length} guess! Great guess!`;
   	}

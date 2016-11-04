@@ -24241,7 +24241,7 @@
 	var compareNumbers = function compareNumbers(compare1, compare2, length) {
 		var diff = Math.abs(compare1 - compare2);
 	
-		if (diff == 0) {
+		if (diff === 0) {
 			if (length == 1) {
 				feedbackMsg = 'Yes! ' + compare1 + '! You got it in ' + length + ' guess! Great guess!';
 			} else {
