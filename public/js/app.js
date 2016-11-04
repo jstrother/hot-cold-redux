@@ -24630,7 +24630,7 @@
 					React.createElement(
 						'p',
 						null,
-						'Your previous best record was ',
+						'You got it in ',
 						this.props.leastGuesses,
 						' guesses!'
 					)
