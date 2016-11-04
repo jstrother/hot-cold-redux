@@ -24179,6 +24179,8 @@
 	// action for new game
 	var NEW_GAME = 'NEW_GAME';
 	var newGame = function newGame() {
+		document.getElementById('totalGuessesDiv').style.display = 'block';
+		document.getElementById('leastGuessesDiv').style.display = 'none';
 		return {
 			type: NEW_GAME
 		};
@@ -24242,6 +24244,7 @@
 		var diff = Math.abs(compare1 - compare2);
 	
 		if (diff === 0) {
+			document.getElementById('totalGuessesDiv').style.display = 'none';
 			document.getElementById('leastGuessesDiv').style.display = 'block';
 			if (length === 1) {
 				feedbackMsg = 'Yes! ' + compare1 + '! You got it in ' + length + ' guess! Great guess!';
@@ -24451,12 +24454,12 @@
 					{ className: 'clearfix' },
 					React.createElement(
 						'li',
-						{ className: 'what', onClick: this.onWhatClick },
+						{ id: 'what', className: 'what', onClick: this.onWhatClick },
 						'How to Play'
 					),
 					React.createElement(
 						'li',
-						{ className: 'new', onClick: this.onNewClick },
+						{ id: 'new', className: 'new', onClick: this.onNewClick },
 						'Start New Game'
 					)
 				),
@@ -24608,13 +24611,17 @@
 					)
 				),
 				React.createElement(
-					'p',
-					null,
-					'Total Guesses: ',
+					'div',
+					{ id: 'totalGuessesDiv', ref: 'totalGuesses' },
 					React.createElement(
-						'span',
-						{ id: 'guessCount', ref: 'guessCount' },
-						this.props.prevGuess.length
+						'p',
+						null,
+						'Total Guesses: ',
+						React.createElement(
+							'span',
+							{ id: 'guessCount', ref: 'guessCount' },
+							this.props.prevGuess.length
+						)
 					)
 				),
 				React.createElement(

@@ -292,3 +292,9 @@ ul.guessBox li {
 #leastGuessesDiv {
 	display: none;
 }
+#what {
+	cursor:pointer;
+}
+#new {
+	cursor:pointer;
+}

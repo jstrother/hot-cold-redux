@@ -6,6 +6,8 @@ let feedbackMsg;
 // action for new game
 const NEW_GAME = 'NEW_GAME';
 const newGame = () => {
+  	document.getElementById('totalGuessesDiv').style.display='block';
+  	document.getElementById('leastGuessesDiv').style.display = 'none';
 	return {
 		type: NEW_GAME
 	};
@@ -67,6 +69,7 @@ const compareNumbers = (compare1, compare2, length)  =>{
 	const diff = Math.abs(compare1 - compare2);
 
   if (diff === 0) {
+  	document.getElementById('totalGuessesDiv').style.display='none';
   	document.getElementById('leastGuessesDiv').style.display = 'block';
   	if (length === 1) {
   		feedbackMsg = `Yes! ${compare1}! You got it in ${length} guess! Great guess!`;

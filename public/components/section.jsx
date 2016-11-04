@@ -23,7 +23,9 @@ const MainSection = React.createClass({
 					<input type="text" name="userGuess" id="userGuess" ref="userGuess" className="text" maxLength="3" autoComplete="off" placeholder="Enter your Guess" required />
 			  			<button type="submit" id="guessButton" ref="guessButton" className="button" name="submit" value="Guess" onClick={this.onGuessClick}>Guess!</button>
 				</form>
-	  		<p>Total Guesses: <span id="guessCount" ref="guessCount">{this.props.prevGuess.length}</span></p>
+	  			<div id="totalGuessesDiv" ref="totalGuesses">
+	  				<p>Total Guesses: <span id="guessCount" ref="guessCount">{this.props.prevGuess.length}</span></p>
+	  			</div>
 				<div id="leastGuessesDiv" ref="leastGuesses">
 					<p>Your previous best record was {this.props.leastGuesses} guesses!</p>
 				</div>
