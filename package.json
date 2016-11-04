@@ -5,7 +5,6 @@
   "main": "public/js/app.js",
   "devJS": "public/index.jsx",
   "scripts": {
-    "start": "webpack-dev-server",
     "serve": "nodemon server.js",
     "build": "webpack",
     "source": "source .bash_profile"
