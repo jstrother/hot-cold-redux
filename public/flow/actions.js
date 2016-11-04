@@ -1,6 +1,6 @@
 // called into reducers.js
 
-// 
+// needed in both endGame() and compareNumbers()
 let feedbackMsg;
 
 // action for new game

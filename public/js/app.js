@@ -24173,7 +24173,7 @@
 	
 	// called into reducers.js
 	
-	// 
+	// needed in both endGame() and compareNumbers()
 	var feedbackMsg = void 0;
 	
 	// action for new game
