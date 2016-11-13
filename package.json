@@ -6,8 +6,7 @@
   "devJS": "public/index.jsx",
   "scripts": {
     "serve": "nodemon server.js",
-    "build": "webpack",
-    "source": "source .bash_profile"
+    "build": "webpack"
   },
   "author": "",
   "license": "ISC",
