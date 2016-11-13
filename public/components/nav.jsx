@@ -25,8 +25,8 @@ const HeaderNav = React.createClass({
 		return (
 			<nav className="modal-container"> 
 				<ul className="clearfix">
-					<li id="what" className="what" onClick={this.onWhatClick}>How to Play</li>
-					<li id="new" className="new" onClick={this.onNewClick}>Start New Game</li>
+					<li id="what" className="what white" onClick={this.onWhatClick}>How to Play</li>
+					<li id="new" className="new white" onClick={this.onNewClick}>Start New Game</li>
 				</ul>
 				<HeaderModal
 					show={this.props.show} />

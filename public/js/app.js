@@ -24456,12 +24456,12 @@
 					{ className: 'clearfix' },
 					React.createElement(
 						'li',
-						{ id: 'what', className: 'what', onClick: this.onWhatClick },
+						{ id: 'what', className: 'what white', onClick: this.onWhatClick },
 						'How to Play'
 					),
 					React.createElement(
 						'li',
-						{ id: 'new', className: 'new', onClick: this.onNewClick },
+						{ id: 'new', className: 'new white', onClick: this.onNewClick },
 						'Start New Game'
 					)
 				),
@@ -24614,7 +24614,7 @@
 				),
 				React.createElement(
 					'div',
-					{ id: 'totalGuessesDiv', ref: 'totalGuesses' },
+					{ id: 'totalGuessesDiv', ref: 'totalGuesses', className: 'white' },
 					React.createElement(
 						'p',
 						null,
@@ -24628,7 +24628,7 @@
 				),
 				React.createElement(
 					'div',
-					{ id: 'leastGuessesDiv', ref: 'leastGuesses' },
+					{ id: 'leastGuessesDiv', ref: 'leastGuesses', className: 'white' },
 					React.createElement(
 						'p',
 						null,
