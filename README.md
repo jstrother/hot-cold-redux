@@ -1,4 +1,3 @@
 # hot-cold-redux
 
-To do:
-set up a way to store high scores (top 5? top 10?)
+Simple number-guessing game with application telling user how close they are and when they get it correct. I built this as my first foray into learning React and Redux.
